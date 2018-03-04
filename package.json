@@ -1,0 +1,25 @@
+{
+  "name": "ciccio",
+  "version": "0.1.0",
+  "homepage": "https://alexsinfarosa.github.io/cranberry-fruitworm-model/",
+  "description": "NEWA cranberry fruitworm model",
+  "author": "alexsinfarosa <as898@cornell.edu>",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.18.0",
+    "date-fns": "^1.29.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "1.1.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "material-ui": "^1.0.0-beta.35",
+    "material-ui-icons": "^1.0.0-beta.35"
+  }
+}
