@@ -13,8 +13,11 @@ import MenuIcon from "material-ui-icons/Menu";
 // components
 import LeftPanel from "./components/LeftPanel";
 
+// fetch
+import fetchData, { fetchAllStations } from "./fetchData";
+
 // utils
-import { fetchStations } from "./utils";
+import { michiganIdAdjustment, networkTemperatureAdjustment } from "./utils";
 
 const drawerWidth = 250;
 const styles = theme => ({
@@ -61,17 +64,30 @@ class App extends React.Component {
     isLoading: false,
     mobileOpen: false,
     stations: [],
-    query: {}
+    data: []
   };
 
-  addQuery = query => {
-    this.setState({ query });
+  loadData = async params => {
+    const { station, sdate, edate } = params;
+    // build params
+    let p = {};
+    p.sid = `${michiganIdAdjustment(station)} ${station.network}`;
+    p.sdate = sdate;
+    p.edate = edate;
+    p.meta = "tzo";
+    p.elems = networkTemperatureAdjustment(station.network);
+
+    // fetching data
+    const acisData = await fetchData(p).then(res => res);
+    console.log(acisData);
+
+    // clean and replacements
   };
 
   componentDidMount() {
     this.setState({ isLoading: true });
-    fetchStations().then(res =>
-      this.setState({ stations: res.stations, isLoading: false })
+    fetchAllStations().then(res =>
+      this.setState({ stations: res, isLoading: false })
     );
   }
 
@@ -124,7 +140,7 @@ class App extends React.Component {
           >
             <LeftPanel
               stations={this.state.stations}
-              addQuery={this.addQuery}
+              loadData={this.loadData}
             />
           </Drawer>
         </Hidden>
@@ -139,7 +155,7 @@ class App extends React.Component {
           >
             <LeftPanel
               stations={this.state.stations}
-              addQuery={this.addQuery}
+              loadData={this.loadData}
             />
           </Drawer>
         </Hidden>

@@ -41,34 +41,35 @@ const styles = theme => ({
 class LeftPanel extends Component {
   state = {
     disease: "",
-    stateUS: "ALL",
-    station: "",
-    dateOfInterest: "",
-    blossomDate: ""
+    statePC: "ALL",
+    station: {},
+    sdate: "2018-01-01",
+    edate: ""
   };
 
   handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+    event.target.name === "station"
+      ? this.setState({ [event.target.name]: JSON.parse(event.target.value) })
+      : this.setState({ [event.target.name]: event.target.value });
   };
 
   handleSubmit = e => {
     e.preventDefault();
 
-    this.props.addQuery({
+    this.props.loadData({
       disease: this.state.disease,
-      stateUS: this.state.stateUS,
+      statePC: this.state.statePC,
       station: this.state.station,
-      dateOfInterest: this.state.dateOfInterest,
-      blossomDate: this.state.blossomDate
+      sdate: this.state.sdate,
+      edate: this.state.edate
     });
 
     // clear fields
     this.setState({
       disease: "",
-      stateUS: "ALL",
-      station: "",
-      dateOfInterest: "",
-      blossomDate: ""
+      statePC: "ALL",
+      station: {},
+      edate: ""
     });
   };
 
@@ -82,13 +83,13 @@ class LeftPanel extends Component {
     ));
 
     let filteredStationList = this.props.stations.filter(
-      station => station.state === this.state.stateUS
+      station => station.state === this.state.statePC
     );
     if (filteredStationList.length === 0)
       filteredStationList = this.props.stations;
 
     const stationList = filteredStationList.map(station => (
-      <MenuItem key={station.id} value={station.id}>
+      <MenuItem key={station.id} value={JSON.stringify(station)}>
         {station.name}
       </MenuItem>
     ));
@@ -131,14 +132,14 @@ class LeftPanel extends Component {
 
           {/* state */}
           <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="stateUS">State</InputLabel>
+            <InputLabel htmlFor="statePC">State</InputLabel>
             <Select
               autoWidth={true}
-              value={this.state.stateUS}
+              value={this.state.statePC}
               onChange={this.handleChange}
               inputProps={{
-                name: "stateUS",
-                id: "stateUS"
+                name: "statePC",
+                id: "statePC"
               }}
             >
               {stateList}
@@ -148,13 +149,13 @@ class LeftPanel extends Component {
           {/* station */}
           <FormControl className={classes.formControl}>
             <InputLabel htmlFor="station">
-              Station ({this.state.stateUS === "ALL"
+              Station ({this.state.statePC === "ALL"
                 ? this.props.stations.length
                 : stationList.length})
             </InputLabel>
             <Select
               autoWidth={true}
-              value={this.state.station}
+              value={JSON.stringify(this.state.station)}
               onChange={this.handleChange}
               inputProps={{
                 name: "station",
@@ -172,34 +173,17 @@ class LeftPanel extends Component {
           <FormControl className={classes.formControl}>
             <TextField
               required
-              id="dateOfInterest"
-              name="dateOfInterest"
+              id="edate"
+              name="edate"
               label="Date of Interest"
               type="date"
-              value={this.state.dateOfInterest}
+              value={this.state.edate}
               onChange={this.handleChange}
               // defaultValue="2017-05-24"
               className={classes.textField}
               InputLabelProps={{
                 shrink: true
               }}
-            />
-          </FormControl>
-
-          <FormControl className={classes.formControl}>
-            <TextField
-              id="blossomDate"
-              name="blossomDate"
-              label="Blossom Date"
-              type="date"
-              value={this.state.blossomDate}
-              // defaultValue="2017-05-24"
-              className={classes.textField}
-              onChange={this.handleChange}
-              InputLabelProps={{
-                shrink: true
-              }}
-              disabled={true}
             />
           </FormControl>
 
@@ -210,9 +194,9 @@ class LeftPanel extends Component {
             type="submit"
             disabled={
               this.state.disease === "" ||
-              this.state.stateUS === "ALL" ||
-              this.state.station === "" ||
-              this.state.dateOfInterest === ""
+              this.state.statePC === "ALL" ||
+              Object.keys(this.state.station).length === 0 ||
+              this.state.edate === ""
                 ? true
                 : false
             }
