@@ -8,6 +8,8 @@ import Typography from "material-ui/Typography";
 import TextField from "material-ui/TextField";
 import Button from "material-ui/Button";
 
+import moment from "moment";
+
 // data
 import states from "../assets/states.json";
 
@@ -48,9 +50,15 @@ class LeftPanel extends Component {
   };
 
   handleChange = event => {
-    event.target.name === "station"
-      ? this.setState({ [event.target.name]: JSON.parse(event.target.value) })
-      : this.setState({ [event.target.name]: event.target.value });
+    this.setState({ [event.target.name]: event.target.value });
+    if (event.target.name === "station") {
+      this.setState({ [event.target.name]: JSON.parse(event.target.value) });
+    }
+    if (event.target.name === "edate") {
+      const sdate = `${moment().year()}-01-01`;
+      const edate = event.target.value;
+      this.setState({ sdate, edate });
+    }
   };
 
   handleSubmit = e => {
