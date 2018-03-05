@@ -26,6 +26,27 @@ export const michiganIdAdjustment = station => {
   return station.id;
 };
 
+// Returns the average of two numbers.
+export const avgTwoStringNumbers = (a, b) => {
+  const aNum = parseFloat(a);
+  const bNum = parseFloat(b);
+  return Math.round((aNum + bNum) / 2).toString();
+};
+
+export const replaceNonConsecutiveMissingValues = arr => {
+  return arr.map((t, i) => {
+    if (i === 0 && t === "M") {
+      return arr[i + 1];
+    } else if (i === arr.length - 1 && t === "M") {
+      return arr[i - 1];
+    } else if (t === "M" && arr[i - 1] !== "M" && arr[i + 1] !== "M") {
+      return avgTwoStringNumbers(arr[i - 1], arr[i + 1]);
+    } else {
+      return t;
+    }
+  });
+};
+
 // convert time in local standard time to local time (based on time zone and dst)
 // function formatTime(day, hour, tzo) {
 //   var time_zone_name = {

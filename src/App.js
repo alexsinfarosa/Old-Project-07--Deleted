@@ -15,6 +15,7 @@ import LeftPanel from "./components/LeftPanel";
 
 // fetch
 import fetchData, { fetchAllStations } from "./fetchData";
+import cleanFetchedData from "./cleanFetchedData";
 
 // utils
 import { michiganIdAdjustment, networkTemperatureAdjustment } from "./utils";
@@ -82,6 +83,8 @@ class App extends React.Component {
     console.log(acisData);
 
     // clean and replacements
+    const cleanedData = cleanFetchedData(acisData, p.edate);
+    console.log(cleanedData);
   };
 
   componentDidMount() {

@@ -63,7 +63,6 @@ export default async params => {
 
   // get current station hourly data
   const currentStation = await fetchCurrentStationHourlyData(params);
-  results.set("currentStn", currentStation);
 
   // get sister station id and network
   const sisterStationIdAndNetwork = await fetchSisterStationIdAndNetwork(
@@ -74,11 +73,19 @@ export default async params => {
   let sisParams = { ...params };
   sisParams.sid = sisterStationIdAndNetwork;
   const sisterStation = await fetchSisterStationHourlyData(sisParams);
-  results.set("sisterStn", sisterStation);
 
   // get forecast hourly data
   const forecastData = await fetchHourlyForcestData(params);
-  results.set("forecast", forecastData);
+
+  // handling timezone (tzo)
+  let tzo = currentStation.meta.tzo;
+  if (currentStation.meta.tzo !== sisterStation.meta.tzo) {
+    tzo = sisterStation.meta.tzo;
+  }
+  results.set("tzo", tzo);
+  results.set("currentStn", currentStation.data);
+  results.set("sisterStn", sisterStation.data);
+  results.set("forecast", forecastData.data);
 
   // console.log(results);
   return results;
