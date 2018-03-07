@@ -12,10 +12,12 @@ import MenuIcon from "material-ui-icons/Menu";
 
 // components
 import LeftPanel from "./components/LeftPanel";
+import GDDTable from "./components/GDDTable";
 
 // fetch
 import fetchData, { fetchAllStations } from "./fetchData";
 import cleanFetchedData from "./cleanFetchedData";
+import transformData from "./transformData";
 
 // utils
 import { michiganIdAdjustment, networkTemperatureAdjustment } from "./utils";
@@ -80,11 +82,14 @@ class App extends React.Component {
 
     // fetching data
     const acisData = await fetchData(p).then(res => res);
-    console.log(acisData);
 
     // clean and replacements
-    const cleanedData = cleanFetchedData(acisData, p.edate);
-    console.log(cleanedData);
+    const cleanedData = await cleanFetchedData(acisData, p.edate);
+
+    // transform data
+    const transformedData = await transformData(cleanedData);
+
+    return transformedData;
   };
 
   componentDidMount() {
@@ -164,9 +169,7 @@ class App extends React.Component {
         </Hidden>
 
         <main className={classes.content}>
-          <Typography noWrap>
-            {"You think water moves fast? You should see ice."}
-          </Typography>
+          <GDDTable />
         </main>
       </div>
     );
