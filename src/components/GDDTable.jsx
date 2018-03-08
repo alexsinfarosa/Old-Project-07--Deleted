@@ -9,6 +9,8 @@ import Table, {
 import Paper from "material-ui/Paper";
 import { CircularProgress } from "material-ui/Progress";
 
+var format = require("date-fns/format");
+
 const styles = theme => ({
   root: {
     width: "100%",
@@ -17,7 +19,14 @@ const styles = theme => ({
     overflowX: "auto"
   },
   table: {
-    minWidth: 800
+    minWidth: 800,
+    borderRadius: 4
+  },
+  tableHeader: {
+    display: "flex",
+    justifyContent: "center",
+    alignContent: "center",
+    borderRight: "1px solid #eee"
   }
 });
 
@@ -32,7 +41,21 @@ class GDDTable extends Component {
           <Table className={classes.table}>
             <TableHead>
               <TableRow>
-                <TableCell numeric>Date</TableCell>
+                <TableCell>Date</TableCell>
+                <TableCell colSpan={4}>Degree Days (base 50 ˚F)</TableCell>
+                <TableCell colSpan={3}>Temperature (˚F)</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell colSpan={2} />
+                <TableCell colSpan={3}>Accumulated From</TableCell>
+                <TableCell colSpan={3} />
+              </TableRow>
+              <TableRow>
+                <TableCell />
+                <TableCell numeric>Daily</TableCell>
+                <TableCell numeric>Jan 1</TableCell>
+                <TableCell numeric>Mar 1</TableCell>
+                <TableCell numeric>Biofix</TableCell>
                 <TableCell numeric>Min</TableCell>
                 <TableCell numeric>Avg</TableCell>
                 <TableCell numeric>Max</TableCell>
@@ -42,7 +65,12 @@ class GDDTable extends Component {
               {data.slice(-8).map(o => {
                 return (
                   <TableRow key={o.date}>
-                    <TableCell numeric>{o.date}</TableCell>
+                    <TableCell numeric>{format(o.date, "MMMM DD")}</TableCell>
+                    <TableCell numeric>{o.dd}</TableCell>
+                    <TableCell numeric>{o.cdd}</TableCell>
+                    <TableCell numeric>{999}</TableCell>
+                    <TableCell numeric>{888}</TableCell>
+                    <TableCell numeric>{777}</TableCell>
                     <TableCell numeric>{o.min}</TableCell>
                     <TableCell numeric>{o.avg}</TableCell>
                     <TableCell numeric>{o.max}</TableCell>
