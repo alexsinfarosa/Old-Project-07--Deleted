@@ -7,6 +7,7 @@ import Table, {
   TableRow
 } from "material-ui/Table";
 import Paper from "material-ui/Paper";
+import { CircularProgress } from "material-ui/Progress";
 
 const styles = theme => ({
   root: {
@@ -22,31 +23,35 @@ const styles = theme => ({
 
 class GDDTable extends Component {
   render() {
-    const { classes, data } = this.props;
+    const { classes, data, isLoading } = this.props;
     return (
       <Paper className={classes.root}>
-        <Table className={classes.table}>
-          <TableHead>
-            <TableRow>
-              <TableCell numeric>Date</TableCell>
-              <TableCell numeric>Min</TableCell>
-              <TableCell numeric>Avg</TableCell>
-              <TableCell numeric>Max</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.slice(-8).map(o => {
-              return (
-                <TableRow key={o.date}>
-                  <TableCell numeric>{o.date}</TableCell>
-                  <TableCell numeric>{o.min}</TableCell>
-                  <TableCell numeric>{o.avg}</TableCell>
-                  <TableCell numeric>{o.max}</TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
+        {isLoading ? (
+          <CircularProgress />
+        ) : (
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <TableCell numeric>Date</TableCell>
+                <TableCell numeric>Min</TableCell>
+                <TableCell numeric>Avg</TableCell>
+                <TableCell numeric>Max</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data.slice(-8).map(o => {
+                return (
+                  <TableRow key={o.date}>
+                    <TableCell numeric>{o.date}</TableCell>
+                    <TableCell numeric>{o.min}</TableCell>
+                    <TableCell numeric>{o.avg}</TableCell>
+                    <TableCell numeric>{o.max}</TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        )}
       </Paper>
     );
   }

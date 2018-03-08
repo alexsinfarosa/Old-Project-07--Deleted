@@ -9,7 +9,6 @@ import Typography from "material-ui/Typography";
 import IconButton from "material-ui/IconButton";
 import Hidden from "material-ui/Hidden";
 import MenuIcon from "material-ui-icons/Menu";
-import { CircularProgress } from "material-ui/Progress";
 
 // components
 import LeftPanel from "./components/LeftPanel";
@@ -72,6 +71,7 @@ class App extends React.Component {
   };
 
   loadData = async params => {
+    this.setState({ isLoading: true });
     const { station, sdate, edate } = params;
     // build params
     let p = {};
@@ -91,7 +91,7 @@ class App extends React.Component {
     // transform data
     const transformedData = await transformData(cleanedData);
 
-    this.setState({ data: transformedData });
+    this.setState({ data: transformedData, isLoading: false });
   };
 
   componentDidMount() {
@@ -103,6 +103,10 @@ class App extends React.Component {
 
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
+  };
+
+  closeDrawer = () => {
+    this.setState({ mobileOpen: false });
   };
 
   render() {
@@ -151,6 +155,7 @@ class App extends React.Component {
             <LeftPanel
               stations={this.state.stations}
               loadData={this.loadData}
+              closeDrawer={this.closeDrawer}
             />
           </Drawer>
         </Hidden>
@@ -171,10 +176,8 @@ class App extends React.Component {
         </Hidden>
 
         <main className={classes.content}>
-          {this.state.data.length !== 0 ? (
-            <GDDTable data={this.state.data} />
-          ) : (
-            <CircularProgress />
+          {this.state.data.length !== 0 && (
+            <GDDTable data={this.state.data} isLoading={this.state.isLoading} />
           )}
         </main>
       </div>

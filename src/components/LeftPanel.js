@@ -79,6 +79,8 @@ class LeftPanel extends Component {
       station: {},
       edate: ""
     });
+
+    this.props.closeDrawer();
   };
 
   render() {
