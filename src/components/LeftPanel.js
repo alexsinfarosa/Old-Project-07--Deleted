@@ -55,7 +55,7 @@ class LeftPanel extends Component {
       this.setState({ [event.target.name]: JSON.parse(event.target.value) });
     }
     if (event.target.name === "edate") {
-      const sdate = `${moment().year()}-01-01`;
+      const sdate = `${moment(event.target.value).year()}-01-01`;
       const edate = event.target.value;
       this.setState({ sdate, edate });
     }

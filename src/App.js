@@ -9,6 +9,7 @@ import Typography from "material-ui/Typography";
 import IconButton from "material-ui/IconButton";
 import Hidden from "material-ui/Hidden";
 import MenuIcon from "material-ui-icons/Menu";
+import { CircularProgress } from "material-ui/Progress";
 
 // components
 import LeftPanel from "./components/LeftPanel";
@@ -80,6 +81,7 @@ class App extends React.Component {
     p.meta = "tzo";
     p.elems = networkTemperatureAdjustment(station.network);
 
+    console.log(p);
     // fetching data
     const acisData = await fetchData(p).then(res => res);
 
@@ -89,7 +91,7 @@ class App extends React.Component {
     // transform data
     const transformedData = await transformData(cleanedData);
 
-    return transformedData;
+    this.setState({ data: transformedData });
   };
 
   componentDidMount() {
@@ -169,7 +171,11 @@ class App extends React.Component {
         </Hidden>
 
         <main className={classes.content}>
-          <GDDTable />
+          {this.state.data.length !== 0 ? (
+            <GDDTable data={this.state.data} />
+          ) : (
+            <CircularProgress />
+          )}
         </main>
       </div>
     );

@@ -1,5 +1,7 @@
 import axios from "axios";
 import moment from "moment";
+import isThisYear from "date-fns/is_this_year";
+
 const protocol = window.location.protocol;
 const dateFormat = "YYYY-MM-DD";
 
@@ -74,8 +76,11 @@ export default async params => {
   sisParams.sid = sisterStationIdAndNetwork;
   const sisterStation = await fetchSisterStationHourlyData(sisParams);
 
-  // get forecast hourly data
-  const forecastData = await fetchHourlyForcestData(params);
+  if (isThisYear(params.edate)) {
+    // get forecast hourly data
+    const forecastData = await fetchHourlyForcestData(params);
+    results.set("forecast", forecastData.data);
+  }
 
   // handling timezone (tzo)
   let tzo = currentStation.meta.tzo;
@@ -85,7 +90,6 @@ export default async params => {
   results.set("tzo", tzo);
   results.set("currentStn", currentStation.data);
   results.set("sisterStn", sisterStation.data);
-  results.set("forecast", forecastData.data);
 
   // console.log(results);
   return results;

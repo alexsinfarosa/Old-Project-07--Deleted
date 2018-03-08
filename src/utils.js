@@ -47,6 +47,16 @@ export const replaceNonConsecutiveMissingValues = arr => {
   });
 };
 
+// Returns average of all the values in array
+export const average = data => {
+  // handling the case for T and W
+  if (data.length === 0) return 0;
+
+  //  calculating average
+  let results = data.map(e => parseFloat(e));
+  return Math.round(results.reduce((acc, val) => acc + val, 0) / data.length);
+};
+
 // convert time in local standard time to local time (based on time zone and dst)
 // function formatTime(day, hour, tzo) {
 //   var time_zone_name = {
