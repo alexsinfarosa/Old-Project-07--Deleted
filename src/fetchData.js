@@ -91,6 +91,6 @@ export default async params => {
   results.set("currentStn", currentStation.data);
   results.set("sisterStn", sisterStation.data);
 
-  // console.log(results);
+  console.log(results);
   return results;
 };

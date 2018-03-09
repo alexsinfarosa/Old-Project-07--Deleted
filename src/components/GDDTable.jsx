@@ -38,7 +38,16 @@ class GDDTable extends Component {
     return (
       <Paper className={classes.root}>
         {isLoading ? (
-          <CircularProgress />
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignContent: "center"
+            }}
+          >
+            <CircularProgress />
+          </div>
         ) : (
           <Table className={classes.table}>
             <TableHead>

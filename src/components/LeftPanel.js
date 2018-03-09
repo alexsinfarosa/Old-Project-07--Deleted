@@ -75,13 +75,13 @@ class LeftPanel extends Component {
     });
 
     // clear fields
-    this.setState({
-      disease: "",
-      statePC: "ALL",
-      station: {},
-      edate: "",
-      bioFix: ""
-    });
+    // this.setState({
+    //   disease: "",
+    //   statePC: "ALL",
+    //   station: {},
+    //   edate: "",
+    //   bioFix: ""
+    // });
 
     this.props.closeDrawer();
   };
@@ -127,24 +127,6 @@ class LeftPanel extends Component {
           autoComplete="off"
           onSubmit={this.handleSubmit}
         >
-          {/* Disease */}
-          <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="disease">Disease</InputLabel>
-            <Select
-              autoWidth={true}
-              value={this.state.disease}
-              onChange={this.handleChange}
-              inputProps={{
-                name: "disease",
-                id: "disease"
-              }}
-            >
-              <MenuItem value={this.state.disease}>
-                {this.state.disease}
-              </MenuItem>
-            </Select>
-          </FormControl>
-
           {/* state */}
           <FormControl className={classes.formControl}>
             <InputLabel htmlFor="statePC">State</InputLabel>
@@ -220,7 +202,6 @@ class LeftPanel extends Component {
             className={classes.formControl}
             type="submit"
             disabled={
-              this.state.disease === "" ||
               this.state.statePC === "ALL" ||
               Object.keys(this.state.station).length === 0 ||
               this.state.edate === ""
