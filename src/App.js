@@ -55,7 +55,7 @@ const styles = theme => ({
     flexGrow: 1,
     backgroundColor: "#fff",
     padding: theme.spacing.unit * 3,
-    paddingTop: theme.spacing.unit * 12
+    paddingTop: theme.spacing.unit * 8
   },
   link: {
     color: "#fff",

@@ -16,12 +16,11 @@ import isToday from "date-fns/is_today";
 const styles = theme => ({
   root: {
     width: "100%",
-    // height: "600px",
-    marginTop: theme.spacing.unit * 6,
+    marginTop: theme.spacing.unit * 2,
     overflowX: "auto"
   },
   table: {
-    minWidth: 800,
+    // minWidth: 800,
     borderRadius: 4
   },
   tableHeader: {
@@ -97,9 +96,11 @@ class GDDTable extends Component {
                   }}
                   numeric
                 >
-                  <div>BioFix</div>
                   <div>
-                    <small>{format(bioFix, "MM/DD/YY")}</small>
+                    BioFix{" "}
+                    <small style={{ fontSize: "0.5rem" }}>
+                      ({format(bioFix, "MMM D")}
+                    </small>)
                   </div>
                 </TableCell>
                 <TableCell numeric>Min</TableCell>
@@ -111,6 +112,7 @@ class GDDTable extends Component {
               {data.slice(-8).map(o => {
                 return (
                   <TableRow
+                    hover
                     key={o.date}
                     style={{
                       background: isToday(o.date) ? pink[100] : null
