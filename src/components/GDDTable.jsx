@@ -80,14 +80,7 @@ class GDDTable extends Component {
               </TableRow>
 
               <TableRow>
-                <TableCell
-                  style={{
-                    borderLeft: "1px solid #E0E0E0"
-                  }}
-                  numeric
-                >
-                  Daily
-                </TableCell>
+                <TableCell>Daily</TableCell>
                 <TableCell numeric>Jan 1</TableCell>
                 <TableCell numeric>Mar 1</TableCell>
                 <TableCell
@@ -120,9 +113,8 @@ class GDDTable extends Component {
                   >
                     <TableCell
                       style={{
-                        textAlign: "center",
-                        margin: 0,
-                        padding: 5
+                        padding: "5px 10px",
+                        textAlign: "center"
                       }}
                     >
                       {isToday(o.date) ? "Today" : format(o.date, "MMMM DD")}
