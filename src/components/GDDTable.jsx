@@ -20,7 +20,7 @@ const styles = theme => ({
     overflowX: "auto"
   },
   table: {
-    // minWidth: 800,
+    minWidth: 700,
     borderRadius: 4
   },
   tableHeader: {
@@ -80,7 +80,7 @@ class GDDTable extends Component {
               </TableRow>
 
               <TableRow>
-                <TableCell>Daily</TableCell>
+                <TableCell numeric>Daily</TableCell>
                 <TableCell numeric>Jan 1</TableCell>
                 <TableCell numeric>Mar 1</TableCell>
                 <TableCell
@@ -113,7 +113,7 @@ class GDDTable extends Component {
                   >
                     <TableCell
                       style={{
-                        padding: "5px 10px",
+                        padding: "0px 10px",
                         textAlign: "center"
                       }}
                     >
