@@ -14,7 +14,6 @@ export default (cleanedData, bioFix) => {
   const bioFixArr = bioFix.split("-");
   const bioFixNoYear = bioFixArr.slice(1).join("-");
   const bioFixIdx = datesNoYear.findIndex(date => date === bioFixNoYear);
-  console.log(bioFixArr, bioFixNoYear, bioFixIdx);
 
   let results = [];
   const base = 50;
