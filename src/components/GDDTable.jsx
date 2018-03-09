@@ -23,6 +23,11 @@ const styles = theme => ({
     minWidth: 700,
     borderRadius: 4
   },
+  isMobile: {
+    [theme.breakpoints.down("md")]: {
+      display: "none"
+    }
+  },
   tableHeader: {
     display: "flex",
     justifyContent: "center",
@@ -74,7 +79,11 @@ class GDDTable extends Component {
                     <small>Accumulated From</small>
                   </div>
                 </TableCell>
-                <TableCell style={{ textAlign: "center" }} colSpan={3}>
+                <TableCell
+                  className={classes.isMobile}
+                  style={{ textAlign: "center" }}
+                  colSpan={3}
+                >
                   Temperature (˚F)
                 </TableCell>
               </TableRow>
@@ -89,16 +98,24 @@ class GDDTable extends Component {
                   }}
                   numeric
                 >
+                  <div>BioFix</div>
                   <div>
-                    BioFix{" "}
-                    <small style={{ fontSize: "0.5rem" }}>
-                      ({format(bioFix, "MMM D")}
-                    </small>)
+                    {bioFix && (
+                      <small style={{ fontSize: "0.5rem" }}>
+                        ({format(bioFix, "MMM D")})
+                      </small>
+                    )}
                   </div>
                 </TableCell>
-                <TableCell numeric>Min</TableCell>
-                <TableCell numeric>Avg</TableCell>
-                <TableCell numeric>Max</TableCell>
+                <TableCell className={classes.isMobile} numeric>
+                  Min
+                </TableCell>
+                <TableCell className={classes.isMobile} numeric>
+                  Avg
+                </TableCell>
+                <TableCell className={classes.isMobile} numeric>
+                  Max
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -131,6 +148,7 @@ class GDDTable extends Component {
                     <TableCell numeric>{o.cddFromMarch1}</TableCell>
                     <TableCell numeric>{o.cddBioFix}</TableCell>
                     <TableCell
+                      className={classes.isMobile}
                       style={{
                         borderLeft: "1px solid #E0E0E0"
                       }}
@@ -138,8 +156,12 @@ class GDDTable extends Component {
                     >
                       {o.min}
                     </TableCell>
-                    <TableCell numeric>{o.avg}</TableCell>
-                    <TableCell numeric>{o.max}</TableCell>
+                    <TableCell className={classes.isMobile} numeric>
+                      {o.avg}
+                    </TableCell>
+                    <TableCell className={classes.isMobile} numeric>
+                      {o.max}
+                    </TableCell>
                   </TableRow>
                 );
               })}

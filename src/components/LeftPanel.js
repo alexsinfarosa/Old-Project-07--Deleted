@@ -75,7 +75,7 @@ class LeftPanel extends Component {
           statePC: params.statePC,
           station: params.station,
           sdate: params.sdate,
-          edate: params.edate,
+          edate: format(new Date(), "YYYY-MM-DD"),
           bioFix: params.bioFix
         });
       }
