@@ -10,10 +10,13 @@ export default (cleanedData, bioFix) => {
   const datesNoYear = datesArr.map(d => d.slice(1).join("-"));
   const march1Idx = datesNoYear.findIndex(date => date === "03-01");
 
-  // handle bioFix date
-  const bioFixArr = bioFix.split("-");
-  const bioFixNoYear = bioFixArr.slice(1).join("-");
-  const bioFixIdx = datesNoYear.findIndex(date => date === bioFixNoYear);
+  // handle bioFix
+  let bioFixIdx;
+  if (bioFix) {
+    const bioFixArr = bioFix.split("-");
+    const bioFixNoYear = bioFixArr.slice(1).join("-");
+    bioFixIdx = datesNoYear.findIndex(date => date === bioFixNoYear);
+  }
 
   let results = [];
   const base = 50;
@@ -30,7 +33,7 @@ export default (cleanedData, bioFix) => {
     cdd += dd;
 
     // start accumulation from March 1st
-    if (i >= march1Idx) {
+    if (bioFix && i >= march1Idx) {
       cddFromMarch1 += dd;
     }
 
@@ -46,7 +49,7 @@ export default (cleanedData, bioFix) => {
     p.avg = avg;
     p.max = Math.max(...arr);
     p.cddFromMarch1 = cddFromMarch1;
-    p.cddBioFix = cddBioFix;
+    p.cddBioFix = bioFix ? cddBioFix : "-";
 
     results.push(p);
   });

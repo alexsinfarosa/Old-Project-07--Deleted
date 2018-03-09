@@ -9,6 +9,7 @@ import TextField from "material-ui/TextField";
 import Button from "material-ui/Button";
 
 import moment from "moment";
+import format from "date-fns/format";
 
 // data
 import states from "../assets/states.json";
@@ -46,8 +47,8 @@ class LeftPanel extends Component {
     statePC: "ALL",
     station: {},
     sdate: "2018-01-01",
-    edate: "2018-03-09",
-    bioFix: "2018-02-14"
+    edate: format(new Date(), "YYYY-MM-DD"),
+    bioFix: ""
   };
 
   handleChange = event => {
