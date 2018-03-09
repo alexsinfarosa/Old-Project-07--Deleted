@@ -41,21 +41,46 @@ class GDDTable extends Component {
           <Table className={classes.table}>
             <TableHead>
               <TableRow>
-                <TableCell>Date</TableCell>
-                <TableCell colSpan={4}>Degree Days (base 50 ˚F)</TableCell>
-                <TableCell colSpan={3}>Temperature (˚F)</TableCell>
+                <TableCell rowSpan={2} numeric>
+                  Date
+                </TableCell>
+                <TableCell
+                  style={{
+                    textAlign: "center",
+                    borderLeft: "1px solid #E0E0E0",
+                    borderRight: "1px solid #E0E0E0"
+                  }}
+                  colSpan={4}
+                >
+                  <div>Degree Days (base 50 ˚F)</div>
+                  <div>
+                    <small>Accumulated From</small>
+                  </div>
+                </TableCell>
+                <TableCell style={{ textAlign: "center" }} colSpan={3}>
+                  Temperature (˚F)
+                </TableCell>
               </TableRow>
+
               <TableRow>
-                <TableCell colSpan={2} />
-                <TableCell colSpan={3}>Accumulated From</TableCell>
-                <TableCell colSpan={3} />
-              </TableRow>
-              <TableRow>
-                <TableCell />
-                <TableCell numeric>Daily</TableCell>
+                <TableCell
+                  style={{
+                    borderLeft: "1px solid #E0E0E0"
+                  }}
+                  numeric
+                >
+                  Daily
+                </TableCell>
                 <TableCell numeric>Jan 1</TableCell>
                 <TableCell numeric>Mar 1</TableCell>
-                <TableCell numeric>Biofix</TableCell>
+                <TableCell
+                  style={{
+                    borderRight: "1px solid #E0E0E0"
+                  }}
+                  numeric
+                >
+                  Biofix
+                </TableCell>
                 <TableCell numeric>Min</TableCell>
                 <TableCell numeric>Avg</TableCell>
                 <TableCell numeric>Max</TableCell>
@@ -66,12 +91,26 @@ class GDDTable extends Component {
                 return (
                   <TableRow key={o.date}>
                     <TableCell numeric>{format(o.date, "MMMM DD")}</TableCell>
-                    <TableCell numeric>{o.dd}</TableCell>
-                    <TableCell numeric>{o.cdd}</TableCell>
+                    <TableCell
+                      style={{
+                        borderLeft: "1px solid #E0E0E0"
+                      }}
+                      numeric
+                    >
+                      {o.dd}
+                    </TableCell>
+
                     <TableCell numeric>{999}</TableCell>
                     <TableCell numeric>{888}</TableCell>
                     <TableCell numeric>{777}</TableCell>
-                    <TableCell numeric>{o.min}</TableCell>
+                    <TableCell
+                      style={{
+                        borderLeft: "1px solid #E0E0E0"
+                      }}
+                      numeric
+                    >
+                      {o.min}
+                    </TableCell>
                     <TableCell numeric>{o.avg}</TableCell>
                     <TableCell numeric>{o.max}</TableCell>
                   </TableRow>

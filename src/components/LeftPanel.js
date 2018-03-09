@@ -42,11 +42,19 @@ const styles = theme => ({
 
 class LeftPanel extends Component {
   state = {
-    disease: "",
-    statePC: "ALL",
-    station: {},
+    disease: "xxx",
+    statePC: "NY",
+    station: {
+      elev: 289,
+      id: "ew_alb",
+      lat: 42.2619,
+      lon: -84.7741,
+      name: "Albion",
+      network: "miwx",
+      state: "MI"
+    },
     sdate: "2018-01-01",
-    edate: ""
+    edate: "2018-03-09"
   };
 
   handleChange = event => {
@@ -136,7 +144,9 @@ class LeftPanel extends Component {
                 id: "disease"
               }}
             >
-              <MenuItem value={"ciccio"}>ciccio...</MenuItem>
+              <MenuItem value={this.state.disease}>
+                {this.state.disease}
+              </MenuItem>
             </Select>
           </FormControl>
 

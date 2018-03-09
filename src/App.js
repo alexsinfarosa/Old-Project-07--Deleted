@@ -171,6 +171,7 @@ class App extends React.Component {
             <LeftPanel
               stations={this.state.stations}
               loadData={this.loadData}
+              closeDrawer={this.closeDrawer}
             />
           </Drawer>
         </Hidden>
