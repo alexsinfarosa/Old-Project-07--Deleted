@@ -8,8 +8,10 @@ import Table, {
 } from "material-ui/Table";
 import Paper from "material-ui/Paper";
 import { CircularProgress } from "material-ui/Progress";
+import pink from "material-ui/colors/pink";
 
-var format = require("date-fns/format");
+import format from "date-fns/format";
+import isToday from "date-fns/is_today";
 
 const styles = theme => ({
   root: {
@@ -89,8 +91,15 @@ class GDDTable extends Component {
             <TableBody>
               {data.slice(-8).map(o => {
                 return (
-                  <TableRow key={o.date}>
-                    <TableCell numeric>{format(o.date, "MMMM DD")}</TableCell>
+                  <TableRow
+                    key={o.date}
+                    style={{
+                      background: isToday(o.date) ? pink[100] : null
+                    }}
+                  >
+                    <TableCell numeric>
+                      {isToday(o.date) ? "Today" : format(o.date, "MMMM DD")}
+                    </TableCell>
                     <TableCell
                       style={{
                         borderLeft: "1px solid #E0E0E0"
