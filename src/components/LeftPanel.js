@@ -43,18 +43,11 @@ const styles = theme => ({
 class LeftPanel extends Component {
   state = {
     disease: "xxx",
-    statePC: "NY",
-    station: {
-      elev: 289,
-      id: "ew_alb",
-      lat: 42.2619,
-      lon: -84.7741,
-      name: "Albion",
-      network: "miwx",
-      state: "MI"
-    },
+    statePC: "ALL",
+    station: {},
     sdate: "2018-01-01",
-    edate: "2018-03-09"
+    edate: "2018-03-09",
+    bioFix: "2018-02-14"
   };
 
   handleChange = event => {
@@ -77,7 +70,8 @@ class LeftPanel extends Component {
       statePC: this.state.statePC,
       station: this.state.station,
       sdate: this.state.sdate,
-      edate: this.state.edate
+      edate: this.state.edate,
+      bioFix: this.state.bioFix
     });
 
     // clear fields
@@ -85,7 +79,8 @@ class LeftPanel extends Component {
       disease: "",
       statePC: "ALL",
       station: {},
-      edate: ""
+      edate: "",
+      bioFix: ""
     });
 
     this.props.closeDrawer();
@@ -187,10 +182,6 @@ class LeftPanel extends Component {
           </FormControl>
 
           <FormControl className={classes.formControl}>
-            <Typography variant="body2">Model Starts on March 1st</Typography>
-          </FormControl>
-
-          <FormControl className={classes.formControl}>
             <TextField
               required
               id="edate"
@@ -198,6 +189,22 @@ class LeftPanel extends Component {
               label="Date of Interest"
               type="date"
               value={this.state.edate}
+              onChange={this.handleChange}
+              // defaultValue="2017-05-24"
+              className={classes.textField}
+              InputLabelProps={{
+                shrink: true
+              }}
+            />
+          </FormControl>
+
+          <FormControl className={classes.formControl}>
+            <TextField
+              id="bioFix"
+              name="bioFix"
+              label="BioFix Date"
+              type="date"
+              value={this.state.bioFix}
               onChange={this.handleChange}
               // defaultValue="2017-05-24"
               className={classes.textField}

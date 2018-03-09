@@ -17,7 +17,7 @@ const styles = theme => ({
   root: {
     width: "100%",
     // height: "600px",
-    marginTop: theme.spacing.unit * 10,
+    marginTop: theme.spacing.unit * 6,
     overflowX: "auto"
   },
   table: {
@@ -34,7 +34,7 @@ const styles = theme => ({
 
 class GDDTable extends Component {
   render() {
-    const { classes, data, isLoading } = this.props;
+    const { classes, data, isLoading, bioFix } = this.props;
     return (
       <Paper className={classes.root}>
         {isLoading ? (
@@ -81,7 +81,10 @@ class GDDTable extends Component {
                   }}
                   numeric
                 >
-                  Biofix
+                  <div>BioFix</div>
+                  <div>
+                    <small>{bioFix}</small>
+                  </div>
                 </TableCell>
                 <TableCell numeric>Min</TableCell>
                 <TableCell numeric>Avg</TableCell>
@@ -108,10 +111,9 @@ class GDDTable extends Component {
                     >
                       {o.dd}
                     </TableCell>
-
-                    <TableCell numeric>{999}</TableCell>
-                    <TableCell numeric>{888}</TableCell>
-                    <TableCell numeric>{777}</TableCell>
+                    <TableCell numeric>{o.cdd}</TableCell>
+                    <TableCell numeric>{o.cddFromMarch1}</TableCell>
+                    <TableCell numeric>{o.cddBioFix}</TableCell>
                     <TableCell
                       style={{
                         borderLeft: "1px solid #E0E0E0"

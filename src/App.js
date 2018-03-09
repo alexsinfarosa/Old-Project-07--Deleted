@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { withStyles } from "material-ui/styles";
 import withRoot from "./withRoot";
 
@@ -54,7 +54,8 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     backgroundColor: "#fff",
-    padding: theme.spacing.unit * 3
+    padding: theme.spacing.unit * 3,
+    paddingTop: theme.spacing.unit * 12
   },
   link: {
     color: "#fff",
@@ -67,11 +68,12 @@ class App extends React.Component {
     isLoading: false,
     mobileOpen: false,
     stations: [],
-    data: []
+    data: [],
+    params: {}
   };
 
   loadData = async params => {
-    this.setState({ isLoading: true });
+    this.setState({ params, isLoading: true });
     const { station, sdate, edate } = params;
     // build params
     let p = {};
@@ -89,7 +91,7 @@ class App extends React.Component {
     const cleanedData = await cleanFetchedData(acisData, p.edate);
 
     // transform data
-    const transformedData = await transformData(cleanedData);
+    const transformedData = await transformData(cleanedData, params.bioFix);
 
     this.setState({ data: transformedData, isLoading: false });
   };
@@ -178,7 +180,13 @@ class App extends React.Component {
 
         <main className={classes.content}>
           {this.state.data.length !== 0 && (
-            <GDDTable data={this.state.data} isLoading={this.state.isLoading} />
+            <Fragment>
+              <GDDTable
+                data={this.state.data}
+                isLoading={this.state.isLoading}
+                bioFix={this.state.params.bioFix}
+              />
+            </Fragment>
           )}
         </main>
       </div>
