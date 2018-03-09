@@ -73,6 +73,7 @@ class App extends React.Component {
   };
 
   loadData = async params => {
+    // console.log(params);
     this.setState({ params, isLoading: true });
     const { station, sdate, edate } = params;
     // build params
@@ -97,9 +98,15 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    this.setState({ isLoading: true });
     fetchAllStations().then(res =>
       this.setState({ stations: res, isLoading: false })
+    );
+  }
+
+  componentDidUpdate() {
+    localStorage.setItem(
+      "newa-cranberry-fruitworm-model",
+      JSON.stringify(this.state.params)
     );
   }
 

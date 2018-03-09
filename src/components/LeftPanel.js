@@ -51,6 +51,36 @@ class LeftPanel extends Component {
     bioFix: ""
   };
 
+  componentDidMount() {
+    // first reinstate localstorage
+    const localStorageRef = localStorage.getItem(
+      "newa-cranberry-fruitworm-model"
+    );
+    if (localStorageRef) {
+      const params = JSON.parse(localStorageRef);
+
+      if (Object.keys(params).length !== 0) {
+        this.setState({
+          disease: params.disease,
+          statePC: params.statePC,
+          station: params.station,
+          sdate: params.sdate,
+          edate: params.edate,
+          bioFix: params.bioFix
+        });
+
+        this.props.loadData({
+          disease: params.disease,
+          statePC: params.statePC,
+          station: params.station,
+          sdate: params.sdate,
+          edate: params.edate,
+          bioFix: params.bioFix
+        });
+      }
+    }
+  }
+
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
     if (event.target.name === "station") {
@@ -74,15 +104,6 @@ class LeftPanel extends Component {
       edate: this.state.edate,
       bioFix: this.state.bioFix
     });
-
-    // clear fields
-    // this.setState({
-    //   disease: "",
-    //   statePC: "ALL",
-    //   station: {},
-    //   edate: "",
-    //   bioFix: ""
-    // });
 
     this.props.closeDrawer();
   };
@@ -202,13 +223,13 @@ class LeftPanel extends Component {
             color="primary"
             className={classes.formControl}
             type="submit"
-            disabled={
-              this.state.statePC === "ALL" ||
-              Object.keys(this.state.station).length === 0 ||
-              this.state.edate === ""
-                ? true
-                : false
-            }
+            // disabled={
+            //   this.state.statePC === "ALL" ||
+            //   Object.keys(this.state.station).length === 0 ||
+            //   this.state.edate === ""
+            //     ? true
+            //     : false
+            // }
           >
             Calculate
           </Button>
