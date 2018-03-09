@@ -52,7 +52,14 @@ class GDDTable extends Component {
           <Table className={classes.table}>
             <TableHead>
               <TableRow>
-                <TableCell rowSpan={2} numeric>
+                <TableCell
+                  rowSpan={2}
+                  style={{
+                    textAlign: "center",
+                    margin: 0,
+                    padding: 0
+                  }}
+                >
                   Date
                 </TableCell>
                 <TableCell
@@ -92,7 +99,7 @@ class GDDTable extends Component {
                 >
                   <div>BioFix</div>
                   <div>
-                    <small>{bioFix}</small>
+                    <small>{format(bioFix, "MM/DD/YY")}</small>
                   </div>
                 </TableCell>
                 <TableCell numeric>Min</TableCell>
@@ -109,7 +116,13 @@ class GDDTable extends Component {
                       background: isToday(o.date) ? pink[100] : null
                     }}
                   >
-                    <TableCell numeric>
+                    <TableCell
+                      style={{
+                        textAlign: "center",
+                        margin: 0,
+                        padding: 5
+                      }}
+                    >
                       {isToday(o.date) ? "Today" : format(o.date, "MMMM DD")}
                     </TableCell>
                     <TableCell

@@ -3,6 +3,7 @@ import isThisYear from "date-fns/is_this_year";
 
 export default (acisData, edate) => {
   const currentStn = acisData.get("currentStn");
+
   if (currentStn.length !== 0) {
     const sisterStn = acisData.get("sisterStn");
     let lastFiveDays;
@@ -26,9 +27,9 @@ export default (acisData, edate) => {
           // replace missing values with forecast
           tempArr = tempArr.map((t, j) => (t === "M" ? forecast[i][1][j] : t));
         }
-
-        results.set(el[0], tempArr);
       }
+
+      results.set(el[0], tempArr);
     });
 
     if (isThisYear(edate)) {

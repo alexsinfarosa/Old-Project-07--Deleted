@@ -33,7 +33,7 @@ export default (cleanedData, bioFix) => {
     cdd += dd;
 
     // start accumulation from March 1st
-    if (bioFix && i >= march1Idx) {
+    if (i >= march1Idx) {
       cddFromMarch1 += dd;
     }
 

@@ -10,6 +10,7 @@ import Button from "material-ui/Button";
 
 import moment from "moment";
 import format from "date-fns/format";
+import isAfter from "date-fns/is_after";
 
 // data
 import states from "../assets/states.json";
@@ -87,9 +88,24 @@ class LeftPanel extends Component {
       this.setState({ [event.target.name]: JSON.parse(event.target.value) });
     }
     if (event.target.name === "edate") {
+      const today = new Date();
+      let edate;
+      if (isAfter(new Date(event.target.value), today)) {
+        edate = format(today, "YYYY-MM-DD");
+      } else {
+        edate = event.target.value;
+      }
       const sdate = `${moment(event.target.value).year()}-01-01`;
-      const edate = event.target.value;
       this.setState({ sdate, edate });
+    }
+    if (event.target.name === "bioFix") {
+      if (this.state.edate) {
+        if (isAfter(new Date(event.target.value), this.state.edate)) {
+          this.setState({ bioFix: this.state.edate });
+        } else {
+          this.setState({ bioFix: event.target.value });
+        }
+      }
     }
   };
 
