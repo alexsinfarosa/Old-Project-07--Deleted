@@ -135,7 +135,7 @@ class GDDTable extends Component {
                     hover
                     key={o.date}
                     style={{
-                      background: isSameDay(new Date(), new Date(o.date))
+                      background: isSameDay(new Date(), o.date)
                         ? pink[100]
                         : null
                     }}
@@ -147,7 +147,7 @@ class GDDTable extends Component {
                         textAlign: "center"
                       }}
                     >
-                      {isSameDay(new Date(), new Date(o.date))
+                      {isSameDay(new Date(), o.date)
                         ? "Today"
                         : format(o.date, "MMMM DD")}
                     </TableCell>

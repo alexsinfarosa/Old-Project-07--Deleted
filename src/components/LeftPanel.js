@@ -186,7 +186,7 @@ class LeftPanel extends Component {
               maxDateMessage="Date must be less than today"
               value={this.state.edate}
               onChange={this.handleEDateChange}
-              format="MM/DD/YY"
+              format="MMMM Do YYYY"
               disableFuture={true}
               InputProps={{
                 endAdornment: (
@@ -207,7 +207,7 @@ class LeftPanel extends Component {
               maxDateMessage="Date must be less than date of interest"
               value={this.state.bioFix}
               onChange={this.handleBioFixChange}
-              format="MM/DD/YY"
+              format="MMMM Do YYYY"
               disableFuture={true}
               InputProps={{
                 endAdornment: (
