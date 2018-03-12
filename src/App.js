@@ -22,6 +22,9 @@ import transformData from "./transformData";
 // utils
 import { michiganIdAdjustment, networkTemperatureAdjustment } from "./utils";
 
+// date-fns
+import { format, startOfYear } from "date-fns";
+
 const drawerWidth = 250;
 const styles = theme => ({
   root: {
@@ -78,12 +81,13 @@ class App extends React.Component {
   loadData = async params => {
     // console.log(params);
     this.setState({ params, isLoading: true });
-    const { station, sdate, edate } = params;
+    const { station, edate, bioFix } = params;
     // build params
     let p = {};
     p.sid = `${michiganIdAdjustment(station)} ${station.network}`;
-    p.sdate = sdate;
-    p.edate = edate;
+    p.sdate = format(startOfYear(edate), "YYYY-MM-DD");
+    p.edate = format(edate, "YYYY-MM-DD");
+    p.bioFix = bioFix ? format(bioFix, "YYYY-MM-DD") : null;
     p.meta = "tzo";
     p.elems = networkTemperatureAdjustment(station.network);
 
@@ -95,7 +99,7 @@ class App extends React.Component {
     const cleanedData = await cleanFetchedData(acisData, p.edate);
 
     // transform data
-    const transformedData = await transformData(cleanedData, params.bioFix);
+    const transformedData = await transformData(cleanedData, p.bioFix);
 
     this.setState({ data: transformedData, isLoading: false });
   };

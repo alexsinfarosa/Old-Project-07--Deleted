@@ -4,11 +4,11 @@ import { InputLabel } from "material-ui/Input";
 import { MenuItem } from "material-ui/Menu";
 import { FormControl } from "material-ui/Form";
 import Select from "material-ui/Select";
-import Typography from "material-ui/Typography";
-import TextField from "material-ui/TextField";
 import Button from "material-ui/Button";
+import { IconButton, Typography, Icon, InputAdornment } from "material-ui";
 
-import { format, isAfter, getYear } from "date-fns";
+// picker
+import { DatePicker } from "material-ui-pickers";
 
 // data
 import states from "../assets/states.json";
@@ -42,15 +42,14 @@ const styles = theme => ({
 
 class LeftPanel extends Component {
   state = {
-    disease: "xxx",
     statePC: "ALL",
     station: {},
-    sdate: `${getYear(new Date())}-01-01`,
-    edate: format(new Date(), "YYYY-MM-DD"),
-    bioFix: ""
+    edate: new Date(),
+    bioFix: null
   };
 
   componentDidMount() {
+    console.log(this.state);
     // first reinstate localstorage
     const localStorageRef = localStorage.getItem(
       "newa-cranberry-fruitworm-model"
@@ -60,20 +59,16 @@ class LeftPanel extends Component {
 
       if (Object.keys(params).length !== 0) {
         this.setState({
-          disease: params.disease,
           statePC: params.statePC,
           station: params.station,
-          sdate: `${getYear(new Date())}-01-01`,
-          edate: format(new Date(), "YYYY-MM-DD"),
+          edate: new Date(),
           bioFix: params.bioFix
         });
 
         this.props.loadData({
-          disease: params.disease,
           statePC: params.statePC,
           station: params.station,
-          sdate: `${getYear(new Date())}-01-01`,
-          edate: format(new Date(), "YYYY-MM-DD"),
+          edate: new Date(),
           bioFix: params.bioFix
         });
       }
@@ -81,40 +76,26 @@ class LeftPanel extends Component {
   }
 
   handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
-    if (event.target.name === "station") {
-      this.setState({ [event.target.name]: JSON.parse(event.target.value) });
-    }
-    if (event.target.name === "edate") {
-      const today = new Date();
-      let edate;
-      if (isAfter(new Date(event.target.value), new Date(today))) {
-        edate = format(today, "YYYY-MM-DD");
-      } else {
-        edate = event.target.value;
-      }
-      const sdate = `${getYear(new Date(event.target.value))}-01-01`;
-      this.setState({ sdate, edate });
-    }
-    if (event.target.name === "bioFix") {
-      if (this.state.edate) {
-        if (isAfter(new Date(event.target.value), new Date(this.state.edate))) {
-          this.setState({ bioFix: this.state.edate });
-        } else {
-          this.setState({ bioFix: event.target.value });
-        }
-      }
-    }
+    event.target.name === "station"
+      ? this.setState({ [event.target.name]: JSON.parse(event.target.value) })
+      : this.setState({ [event.target.name]: event.target.value });
+  };
+
+  handleEDateChange = edate => {
+    console.log(edate);
+    this.setState({ edate });
+  };
+
+  handleBioFixChange = bioFix => {
+    this.setState({ bioFix });
   };
 
   handleSubmit = e => {
     e.preventDefault();
 
     this.props.loadData({
-      disease: this.state.disease,
       statePC: this.state.statePC,
       station: this.state.station,
-      sdate: this.state.sdate,
       edate: this.state.edate,
       bioFix: this.state.bioFix
     });
@@ -200,34 +181,42 @@ class LeftPanel extends Component {
           </FormControl>
 
           <FormControl className={classes.formControl}>
-            <TextField
-              required
-              id="edate"
-              name="edate"
+            <DatePicker
               label="Date of Interest"
-              type="date"
+              maxDateMessage="Date must be less than today"
               value={this.state.edate}
-              onChange={this.handleChange}
-              // defaultValue="2017-05-24"
-              className={classes.textField}
-              InputLabelProps={{
-                shrink: true
+              onChange={this.handleEDateChange}
+              format="MM/DD/YY"
+              disableFuture={true}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton>
+                      <Icon>date_range</Icon>
+                    </IconButton>
+                  </InputAdornment>
+                )
               }}
             />
           </FormControl>
 
           <FormControl className={classes.formControl}>
-            <TextField
-              id="bioFix"
-              name="bioFix"
+            <DatePicker
               label="BioFix Date"
-              type="date"
+              // helperText="Possible manual entry via keyboard"
+              maxDateMessage="Date must be less than date of interest"
               value={this.state.bioFix}
-              onChange={this.handleChange}
-              // defaultValue="2017-05-24"
-              className={classes.textField}
-              InputLabelProps={{
-                shrink: true
+              onChange={this.handleBioFixChange}
+              format="MM/DD/YY"
+              disableFuture={true}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton>
+                      <Icon>date_range</Icon>
+                    </IconButton>
+                  </InputAdornment>
+                )
               }}
             />
           </FormControl>
@@ -237,13 +226,9 @@ class LeftPanel extends Component {
             color="primary"
             className={classes.formControl}
             type="submit"
-            // disabled={
-            //   this.state.statePC === "ALL" ||
-            //   Object.keys(this.state.station).length === 0 ||
-            //   this.state.edate === ""
-            //     ? true
-            //     : false
-            // }
+            disabled={
+              Object.keys(this.state.station).length === 0 ? true : false
+            }
           >
             Calculate
           </Button>
