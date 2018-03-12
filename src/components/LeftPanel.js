@@ -8,9 +8,7 @@ import Typography from "material-ui/Typography";
 import TextField from "material-ui/TextField";
 import Button from "material-ui/Button";
 
-import moment from "moment";
-import format from "date-fns/format";
-import isAfter from "date-fns/is_after";
+import { format, isAfter, getYear } from "date-fns";
 
 // data
 import states from "../assets/states.json";
@@ -47,7 +45,7 @@ class LeftPanel extends Component {
     disease: "xxx",
     statePC: "ALL",
     station: {},
-    sdate: "2018-01-01",
+    sdate: `${getYear(new Date())}-01-01`,
     edate: format(new Date(), "YYYY-MM-DD"),
     bioFix: ""
   };
@@ -65,8 +63,8 @@ class LeftPanel extends Component {
           disease: params.disease,
           statePC: params.statePC,
           station: params.station,
-          sdate: params.sdate,
-          edate: params.edate,
+          sdate: `${getYear(new Date())}-01-01`,
+          edate: format(new Date(), "YYYY-MM-DD"),
           bioFix: params.bioFix
         });
 
@@ -74,7 +72,7 @@ class LeftPanel extends Component {
           disease: params.disease,
           statePC: params.statePC,
           station: params.station,
-          sdate: params.sdate,
+          sdate: `${getYear(new Date())}-01-01`,
           edate: format(new Date(), "YYYY-MM-DD"),
           bioFix: params.bioFix
         });
@@ -90,17 +88,17 @@ class LeftPanel extends Component {
     if (event.target.name === "edate") {
       const today = new Date();
       let edate;
-      if (isAfter(new Date(event.target.value), today)) {
+      if (isAfter(new Date(event.target.value), new Date(today))) {
         edate = format(today, "YYYY-MM-DD");
       } else {
         edate = event.target.value;
       }
-      const sdate = `${moment(event.target.value).year()}-01-01`;
+      const sdate = `${getYear(new Date(event.target.value))}-01-01`;
       this.setState({ sdate, edate });
     }
     if (event.target.name === "bioFix") {
       if (this.state.edate) {
-        if (isAfter(new Date(event.target.value), this.state.edate)) {
+        if (isAfter(new Date(event.target.value), new Date(this.state.edate))) {
           this.setState({ bioFix: this.state.edate });
         } else {
           this.setState({ bioFix: event.target.value });

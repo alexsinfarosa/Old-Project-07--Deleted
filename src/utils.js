@@ -1,5 +1,3 @@
-// import moment from "moment";
-
 // Handling Temperature parameter and Michigan network id adjustment
 export const networkTemperatureAdjustment = network => {
   // Handling different temperature parameter for each network

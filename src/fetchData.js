@@ -1,6 +1,5 @@
 import axios from "axios";
-import moment from "moment";
-import isThisYear from "date-fns/is_this_year";
+import { format, isSameYear, addDays } from "date-fns";
 
 const protocol = window.location.protocol;
 const dateFormat = "YYYY-MM-DD";
@@ -58,9 +57,7 @@ export const fetchSisterStationHourlyData = params => {
 const forecastUrl = `${protocol}//newa2.nrcc.cornell.edu/newaUtil/getFcstData`;
 const fetchHourlyForcestData = params => {
   // always need to add 5 days
-  const plusFiveDays = moment()
-    .add(5, "days")
-    .format(dateFormat);
+  const plusFiveDays = format(addDays(new Date(), 5), dateFormat);
   const [id, network] = params.sid.split(" ");
 
   return axios
@@ -86,7 +83,7 @@ export default async params => {
   sisParams.sid = sisterStationIdAndNetwork;
   const sisterStation = await fetchSisterStationHourlyData(sisParams);
 
-  if (isThisYear(params.edate)) {
+  if (isSameYear(new Date(), new Date(params.edate))) {
     // get forecast hourly data
     const forecastData = await fetchHourlyForcestData(params);
     results.set("forecast", forecastData.data);

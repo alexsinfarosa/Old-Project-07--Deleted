@@ -10,8 +10,7 @@ import Paper from "material-ui/Paper";
 import { CircularProgress } from "material-ui/Progress";
 import pink from "material-ui/colors/pink";
 
-import format from "date-fns/format";
-import isToday from "date-fns/is_today";
+import { format, isSameDay } from "date-fns";
 
 const styles = theme => ({
   root: {
@@ -20,13 +19,16 @@ const styles = theme => ({
     overflowX: "auto"
   },
   table: {
-    minWidth: 700,
+    // minWidth: 700,
     borderRadius: 4
   },
   isMobile: {
     [theme.breakpoints.down("md")]: {
       display: "none"
     }
+  },
+  tableCell: {
+    padding: "0 10px"
   },
   tableHeader: {
     display: "flex",
@@ -57,6 +59,7 @@ class GDDTable extends Component {
             <TableHead>
               <TableRow>
                 <TableCell
+                  className={classes.tableCell}
                   rowSpan={2}
                   style={{
                     textAlign: "center",
@@ -89,10 +92,17 @@ class GDDTable extends Component {
               </TableRow>
 
               <TableRow>
-                <TableCell numeric>Daily</TableCell>
-                <TableCell numeric>Jan 1</TableCell>
-                <TableCell numeric>Mar 1</TableCell>
+                <TableCell className={classes.tableCell} numeric>
+                  Daily
+                </TableCell>
+                <TableCell className={classes.tableCell} numeric>
+                  Jan 1
+                </TableCell>
+                <TableCell className={classes.tableCell} numeric>
+                  Mar 1
+                </TableCell>
                 <TableCell
+                  className={classes.tableCell}
                   style={{
                     borderRight: "1px solid #E0E0E0"
                   }}
@@ -125,18 +135,24 @@ class GDDTable extends Component {
                     hover
                     key={o.date}
                     style={{
-                      background: isToday(o.date) ? pink[100] : null
+                      background: isSameDay(new Date(), new Date(o.date))
+                        ? pink[100]
+                        : null
                     }}
                   >
                     <TableCell
+                      className={classes.tableCell}
                       style={{
                         padding: "0px 10px",
                         textAlign: "center"
                       }}
                     >
-                      {isToday(o.date) ? "Today" : format(o.date, "MMMM DD")}
+                      {isSameDay(new Date(), new Date(o.date))
+                        ? "Today"
+                        : format(o.date, "MMMM DD")}
                     </TableCell>
                     <TableCell
+                      className={classes.tableCell}
                       style={{
                         borderLeft: "1px solid #E0E0E0"
                       }}
@@ -144,9 +160,15 @@ class GDDTable extends Component {
                     >
                       {o.dd}
                     </TableCell>
-                    <TableCell numeric>{o.cdd}</TableCell>
-                    <TableCell numeric>{o.cddFromMarch1}</TableCell>
-                    <TableCell numeric>{o.cddBioFix}</TableCell>
+                    <TableCell className={classes.tableCell} numeric>
+                      {o.cdd}
+                    </TableCell>
+                    <TableCell className={classes.tableCell} numeric>
+                      {o.cddFromMarch1}
+                    </TableCell>
+                    <TableCell className={classes.tableCell} numeric>
+                      {o.cddBioFix}
+                    </TableCell>
                     <TableCell
                       className={classes.isMobile}
                       style={{
