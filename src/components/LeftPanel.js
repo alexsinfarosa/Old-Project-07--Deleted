@@ -6,6 +6,7 @@ import { FormControl } from "material-ui/Form";
 import Select from "material-ui/Select";
 import Button from "material-ui/Button";
 import { IconButton, Typography, Icon, InputAdornment } from "material-ui";
+import PlaceIcon from "material-ui-icons/Place";
 
 // picker
 import { DatePicker } from "material-ui-pickers";
@@ -23,6 +24,13 @@ const styles = theme => ({
     minWidth: 120,
     width: "80%",
     margin: "32px auto"
+  },
+  formControlIcon: {
+    minWidth: 120,
+    width: "80%",
+    margin: "0px auto",
+    marginTop: 8,
+    textAlign: "center"
   },
   selectEmpty: {
     marginTop: theme.spacing.unit * 2
@@ -145,9 +153,26 @@ class LeftPanel extends Component {
           onSubmit={this.handleSubmit}
         >
           {/* state */}
+
           <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="statePC">State</InputLabel>
+            <InputLabel htmlFor="statePC">
+              State<IconButton
+                onClick={this.props.toggleModal}
+                aria-label="map"
+                color="primary"
+                style={{
+                  margin: 0,
+                  padding: 0,
+                  fontSize: 30,
+                  marginBottom: 10
+                }}
+              >
+                <PlaceIcon />
+              </IconButton>
+            </InputLabel>
+            <br />
             <Select
+              style={{ marginTop: 10 }}
               autoWidth={true}
               value={this.state.statePC}
               onChange={this.handleChange}

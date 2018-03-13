@@ -9,6 +9,7 @@ import Typography from "material-ui/Typography";
 import IconButton from "material-ui/IconButton";
 import Hidden from "material-ui/Hidden";
 import MenuIcon from "material-ui-icons/Menu";
+import Modal from "material-ui/Modal";
 
 // components
 import LeftPanel from "./components/LeftPanel";
@@ -69,6 +70,10 @@ const styles = theme => ({
   link: {
     color: "#fff",
     textDecoration: "none"
+  },
+  modal: {
+    width: "100%",
+    height: "50vh"
   }
 });
 
@@ -78,7 +83,8 @@ class App extends React.Component {
     mobileOpen: false,
     stations: [],
     data: [],
-    params: {}
+    params: {},
+    isModalOpen: false
   };
 
   loadData = async params => {
@@ -128,6 +134,10 @@ class App extends React.Component {
     this.setState({ mobileOpen: false });
   };
 
+  toggleModal = () => {
+    this.setState({ isModalOpen: !this.state.isModalOpen });
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -175,6 +185,7 @@ class App extends React.Component {
               stations={this.state.stations}
               loadData={this.loadData}
               closeDrawer={this.closeDrawer}
+              toggleModal={this.toggleModal}
             />
           </Drawer>
         </Hidden>
@@ -191,6 +202,7 @@ class App extends React.Component {
               stations={this.state.stations}
               loadData={this.loadData}
               closeDrawer={this.closeDrawer}
+              toggleModal={this.toggleModal}
             />
           </Drawer>
         </Hidden>
@@ -203,10 +215,20 @@ class App extends React.Component {
                 isLoading={this.state.isLoading}
                 bioFix={this.state.params.bioFix}
               />
-              <USMap />
             </Fragment>
           )}
         </main>
+
+        <Modal
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+          open={this.state.isModalOpen}
+          onClose={this.toggleModal}
+        >
+          <div className={classes.modal}>
+            <USMap />
+          </div>
+        </Modal>
       </div>
     );
   }

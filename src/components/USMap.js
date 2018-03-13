@@ -8,7 +8,7 @@ import Paper from "material-ui/Paper";
 const styles = theme => ({
   root: {
     width: "100%",
-    height: "35vh",
+    height: "100%",
     marginTop: theme.spacing.unit * 4
   }
 });
@@ -17,7 +17,7 @@ class USMap extends Component {
   state = {
     lat: 42.9543,
     lng: -75.5262,
-    zoom: 6
+    zoom: 7
   };
 
   componentDidMount() {
