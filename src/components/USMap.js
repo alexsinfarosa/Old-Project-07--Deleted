@@ -36,6 +36,7 @@ class USMap extends Component {
 
   render() {
     const { classes, params, stations } = this.props;
+    console.log(params);
 
     const stationsWithMatchedIcons = stations.map(station => {
       station["icon"] = matchIconsToStations(station, params.statePC);
@@ -47,9 +48,9 @@ class USMap extends Component {
       <Marker
         key={`${station.id} ${station.network}`}
         position={[station.lat, station.lon]}
-        icon={L.icon({ iconUrl: station.icon })}
+        // icon={L.icon({ iconUrl: station.icon })}
         title={station.name}
-        onClick={this.onClickSetStation}
+        onClick={() => this.props.setStateStation(station)}
       >
         <Popup>
           <span>
@@ -63,7 +64,7 @@ class USMap extends Component {
       <Paper className={classes.root}>
         <Map
           style={{ width: "100%", height: "100%" }}
-          bounds={this.state.bbox}
+          bounds={params.statePC.bbox}
           ref={m => (this.leafletMap = m)}
           scrollWheelZoom={false}
         >

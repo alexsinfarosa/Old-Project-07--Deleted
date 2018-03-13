@@ -50,7 +50,14 @@ const styles = theme => ({
 
 class LeftPanel extends Component {
   state = {
-    statePC: "ALL",
+    statePC: {
+      postalCode: "ALL",
+      lat: 42.5,
+      lng: -75.7,
+      zoom: 6,
+      name: "All States",
+      bbox: [[30.22686, -104.0629], [49.38478, -69.92871]]
+    },
     station: {},
     edate: new Date(),
     bioFix: null
@@ -83,10 +90,20 @@ class LeftPanel extends Component {
     }
   }
 
+  componentDidUpdate() {
+    // this.props.loadData({
+    //   statePC: this.state.statePC,
+    //   station: this.state.station,
+    //   edate: new Date(),
+    //   bioFix: this.state.bioFix
+    // });
+  }
+
   handleChange = event => {
-    event.target.name === "station"
-      ? this.setState({ [event.target.name]: JSON.parse(event.target.value) })
-      : this.setState({ [event.target.name]: event.target.value });
+    if (event.target.name === "station" || event.target.name === "statePC") {
+      this.setState({ [event.target.name]: JSON.parse(event.target.value) });
+    }
+    this.setState({ [event.target.name]: event.target.value });
   };
 
   handleEDateChange = edate => {
@@ -115,13 +132,13 @@ class LeftPanel extends Component {
     const { classes } = this.props;
 
     const stateList = states.map(state => (
-      <MenuItem key={state.postalCode} value={state.postalCode}>
+      <MenuItem key={state.postalCode} value={JSON.stringify(state)}>
         {state.name}
       </MenuItem>
     ));
 
     let filteredStationList = this.props.stations.filter(
-      station => station.state === this.state.statePC
+      station => station.state === this.state.statePC.postalCode
     );
     if (filteredStationList.length === 0)
       filteredStationList = this.props.stations;
@@ -174,7 +191,7 @@ class LeftPanel extends Component {
             <Select
               style={{ marginTop: 10 }}
               autoWidth={true}
-              value={this.state.statePC}
+              value={JSON.stringify(this.state.statePC)}
               onChange={this.handleChange}
               inputProps={{
                 name: "statePC",

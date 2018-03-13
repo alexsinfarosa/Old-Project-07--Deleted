@@ -1,7 +1,8 @@
 import React, { Fragment } from "react";
+
+// material-ui
 import { withStyles } from "material-ui/styles";
 import withRoot from "./withRoot";
-
 import Drawer from "material-ui/Drawer";
 import AppBar from "material-ui/AppBar";
 import Toolbar from "material-ui/Toolbar";
@@ -13,7 +14,6 @@ import Modal from "material-ui/Modal";
 
 // components
 import LeftPanel from "./components/LeftPanel";
-// import TopControls from "./components/TopControls";
 import GDDTable from "./components/GDDTable";
 import USMap from "./components/USMap";
 
@@ -24,6 +24,9 @@ import transformData from "./transformData";
 
 // utils
 import { michiganIdAdjustment, networkTemperatureAdjustment } from "./utils";
+
+// data
+import states from "./assets/states.json";
 
 // date-fns
 import { format, startOfYear } from "date-fns";
@@ -83,8 +86,24 @@ class App extends React.Component {
     mobileOpen: false,
     stations: [],
     data: [],
-    params: {},
+    params: {
+      statePC: {
+        postalCode: "ALL",
+        lat: 42.5,
+        lng: -75.7,
+        zoom: 6,
+        name: "All States",
+        bbox: [[30.22686, -104.0629], [49.38478, -69.92871]]
+      }
+    },
     isModalOpen: false
+  };
+
+  setStateStation = station => {
+    const state = states.find(state => state.postalCode === station.state);
+    const params = { station, state };
+    this.setState({ params });
+    console.log(this.state);
   };
 
   loadData = async params => {
@@ -226,7 +245,11 @@ class App extends React.Component {
           onClose={this.toggleModal}
         >
           <div className={classes.modal}>
-            <USMap params={this.state.params} stations={this.state.stations} />
+            <USMap
+              params={this.state.params}
+              stations={this.state.stations}
+              setStateStation={this.state.setStateStation}
+            />
           </div>
         </Modal>
       </div>

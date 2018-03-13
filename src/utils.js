@@ -1,7 +1,8 @@
 // MAP ---------------------------------------------------------
-export const matchIconsToStations = (station, statePostalCode) => {
+export const matchIconsToStations = (station, state) => {
   const protocol = window.location.protocol;
   const { network } = station;
+  const { postalCode } = state;
 
   const newa = `${protocol}//newa2.nrcc.cornell.edu/gifs/newa_small.png`;
   const newaGray = `${protocol}//newa2.nrcc.cornell.edu/gifs/newa_smallGray.png`;
@@ -17,19 +18,19 @@ export const matchIconsToStations = (station, statePostalCode) => {
     network === "oardc" ||
     ((network === "cu_log" || network === "culog") && station.state !== "NY")
   ) {
-    return station.state === statePostalCode || statePostalCode === "ALL"
+    return station.state === postalCode || postalCode === "ALL"
       ? newa
       : newaGray;
   }
 
   if (network === "cu_log" || network === "culog") {
-    return station.state === statePostalCode || statePostalCode === "ALL"
+    return station.state === postalCode || postalCode === "ALL"
       ? culog
       : culogGray;
   }
 
   if (network === "icao") {
-    return station.state === statePostalCode || statePostalCode === "ALL"
+    return station.state === postalCode || postalCode === "ALL"
       ? airport
       : airportGray;
   }
