@@ -132,20 +132,14 @@ class GDDTable extends Component {
             <TableBody>
               {data.slice(-8).map(o => {
                 return (
-                  <TableRow
-                    hover
-                    key={o.date}
-                    style={{
-                      background: isSameDay(new Date(), o.date)
-                        ? pink[100]
-                        : null
-                    }}
-                  >
+                  <TableRow hover key={o.date}>
                     <TableCell
                       className={classes.tableCell}
                       style={{
                         padding: "0px 10px",
-                        textAlign: "center"
+                        textAlign: "center",
+                        fontSize: isSameDay(new Date(), o.date) ? "1rem" : null,
+                        fontWeight: isSameDay(new Date(), o.date) ? 700 : null
                       }}
                     >
                       {isSameDay(new Date(), o.date)
@@ -155,34 +149,73 @@ class GDDTable extends Component {
                     <TableCell
                       className={classes.tableCell}
                       style={{
-                        borderLeft: "1px solid #E0E0E0"
+                        borderLeft: "1px solid #E0E0E0",
+                        fontSize: isSameDay(new Date(), o.date) ? "1rem" : null,
+                        fontWeight: isSameDay(new Date(), o.date) ? 700 : null
                       }}
                       numeric
                     >
                       {o.dd}
                     </TableCell>
-                    <TableCell className={classes.tableCell} numeric>
+                    <TableCell
+                      style={{
+                        fontSize: isSameDay(new Date(), o.date) ? "1rem" : null,
+                        fontWeight: isSameDay(new Date(), o.date) ? 700 : null
+                      }}
+                      className={classes.tableCell}
+                      numeric
+                    >
                       {o.cdd}
                     </TableCell>
-                    <TableCell className={classes.tableCell} numeric>
+                    <TableCell
+                      style={{
+                        fontSize: isSameDay(new Date(), o.date) ? "1rem" : null,
+                        fontWeight: isSameDay(new Date(), o.date) ? 700 : null
+                      }}
+                      className={classes.tableCell}
+                      numeric
+                    >
                       {o.cddFromMarch1}
                     </TableCell>
-                    <TableCell className={classes.tableCell} numeric>
+                    <TableCell
+                      style={{
+                        fontSize: isSameDay(new Date(), o.date) ? "1rem" : null,
+                        fontWeight: isSameDay(new Date(), o.date) ? 700 : null
+                      }}
+                      className={classes.tableCell}
+                      numeric
+                    >
                       {o.cddBioFix}
                     </TableCell>
                     <TableCell
                       className={classes.isMobile}
                       style={{
-                        borderLeft: "1px solid #E0E0E0"
+                        borderLeft: "1px solid #E0E0E0",
+                        fontSize: isSameDay(new Date(), o.date) ? "1rem" : null,
+                        fontWeight: isSameDay(new Date(), o.date) ? 700 : null
                       }}
                       numeric
                     >
                       {o.min}
                     </TableCell>
-                    <TableCell className={classes.isMobile} numeric>
+                    <TableCell
+                      style={{
+                        fontSize: isSameDay(new Date(), o.date) ? "1rem" : null,
+                        fontWeight: isSameDay(new Date(), o.date) ? 700 : null
+                      }}
+                      className={classes.isMobile}
+                      numeric
+                    >
                       {o.avg}
                     </TableCell>
-                    <TableCell className={classes.isMobile} numeric>
+                    <TableCell
+                      style={{
+                        fontSize: isSameDay(new Date(), o.date) ? "1rem" : null,
+                        fontWeight: isSameDay(new Date(), o.date) ? 700 : null
+                      }}
+                      className={classes.isMobile}
+                      numeric
+                    >
                       {o.max}
                     </TableCell>
                   </TableRow>
