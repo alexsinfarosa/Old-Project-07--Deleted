@@ -226,7 +226,7 @@ class App extends React.Component {
           onClose={this.toggleModal}
         >
           <div className={classes.modal}>
-            <USMap />
+            <USMap params={this.state.params} stations={this.state.stations} />
           </div>
         </Modal>
       </div>
