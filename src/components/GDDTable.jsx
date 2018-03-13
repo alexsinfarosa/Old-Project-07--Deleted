@@ -8,7 +8,6 @@ import Table, {
 } from "material-ui/Table";
 import Paper from "material-ui/Paper";
 import { CircularProgress } from "material-ui/Progress";
-import pink from "material-ui/colors/pink";
 
 import { format, isSameDay } from "date-fns";
 
@@ -131,6 +130,7 @@ class GDDTable extends Component {
             </TableHead>
             <TableBody>
               {data.slice(-8).map(o => {
+                const isToday = isSameDay(new Date(), o.date);
                 return (
                   <TableRow hover key={o.date}>
                     <TableCell
@@ -138,20 +138,18 @@ class GDDTable extends Component {
                       style={{
                         padding: "0px 10px",
                         textAlign: "center",
-                        fontSize: isSameDay(new Date(), o.date) ? "1rem" : null,
-                        fontWeight: isSameDay(new Date(), o.date) ? 700 : null
+                        fontSize: isToday ? "1rem" : null,
+                        fontWeight: isToday ? 700 : null
                       }}
                     >
-                      {isSameDay(new Date(), o.date)
-                        ? "Today"
-                        : format(o.date, "MMMM DD")}
+                      {isToday ? "Today" : format(o.date, "MMMM DD")}
                     </TableCell>
                     <TableCell
                       className={classes.tableCell}
                       style={{
                         borderLeft: "1px solid #E0E0E0",
-                        fontSize: isSameDay(new Date(), o.date) ? "1rem" : null,
-                        fontWeight: isSameDay(new Date(), o.date) ? 700 : null
+                        fontSize: isToday ? "1rem" : null,
+                        fontWeight: isToday ? 700 : null
                       }}
                       numeric
                     >
@@ -159,8 +157,8 @@ class GDDTable extends Component {
                     </TableCell>
                     <TableCell
                       style={{
-                        fontSize: isSameDay(new Date(), o.date) ? "1rem" : null,
-                        fontWeight: isSameDay(new Date(), o.date) ? 700 : null
+                        fontSize: isToday ? "1rem" : null,
+                        fontWeight: isToday ? 700 : null
                       }}
                       className={classes.tableCell}
                       numeric
@@ -169,8 +167,8 @@ class GDDTable extends Component {
                     </TableCell>
                     <TableCell
                       style={{
-                        fontSize: isSameDay(new Date(), o.date) ? "1rem" : null,
-                        fontWeight: isSameDay(new Date(), o.date) ? 700 : null
+                        fontSize: isToday ? "1rem" : null,
+                        fontWeight: isToday ? 700 : null
                       }}
                       className={classes.tableCell}
                       numeric
@@ -179,8 +177,8 @@ class GDDTable extends Component {
                     </TableCell>
                     <TableCell
                       style={{
-                        fontSize: isSameDay(new Date(), o.date) ? "1rem" : null,
-                        fontWeight: isSameDay(new Date(), o.date) ? 700 : null
+                        fontSize: isToday ? "1rem" : null,
+                        fontWeight: isToday ? 700 : null
                       }}
                       className={classes.tableCell}
                       numeric
@@ -191,8 +189,8 @@ class GDDTable extends Component {
                       className={classes.isMobile}
                       style={{
                         borderLeft: "1px solid #E0E0E0",
-                        fontSize: isSameDay(new Date(), o.date) ? "1rem" : null,
-                        fontWeight: isSameDay(new Date(), o.date) ? 700 : null
+                        fontSize: isToday ? "1rem" : null,
+                        fontWeight: isToday ? 700 : null
                       }}
                       numeric
                     >
@@ -200,8 +198,8 @@ class GDDTable extends Component {
                     </TableCell>
                     <TableCell
                       style={{
-                        fontSize: isSameDay(new Date(), o.date) ? "1rem" : null,
-                        fontWeight: isSameDay(new Date(), o.date) ? 700 : null
+                        fontSize: isToday ? "1rem" : null,
+                        fontWeight: isToday ? 700 : null
                       }}
                       className={classes.isMobile}
                       numeric
@@ -210,8 +208,8 @@ class GDDTable extends Component {
                     </TableCell>
                     <TableCell
                       style={{
-                        fontSize: isSameDay(new Date(), o.date) ? "1rem" : null,
-                        fontWeight: isSameDay(new Date(), o.date) ? 700 : null
+                        fontSize: isToday ? "1rem" : null,
+                        fontWeight: isToday ? 700 : null
                       }}
                       className={classes.isMobile}
                       numeric
