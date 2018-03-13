@@ -15,7 +15,8 @@ import { format, isSameDay } from "date-fns";
 const styles = theme => ({
   root: {
     width: "100%",
-    marginTop: theme.spacing.unit * 2,
+    height: "35vh",
+    marginTop: theme.spacing.unit * 4,
     overflowX: "auto"
   },
   table: {

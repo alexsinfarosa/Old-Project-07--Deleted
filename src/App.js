@@ -12,7 +12,9 @@ import MenuIcon from "material-ui-icons/Menu";
 
 // components
 import LeftPanel from "./components/LeftPanel";
+// import TopControls from "./components/TopControls";
 import GDDTable from "./components/GDDTable";
+import USMap from "./components/USMap";
 
 // fetch
 import fetchData, { fetchAllStations } from "./fetchData";
@@ -57,8 +59,9 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     flexShrink: 1,
-    backgroundColor: "#fff",
-    padding: theme.spacing.unit * 3,
+    // backgroundColor: "#fff",
+    paddingLeft: theme.spacing.unit * 1.5,
+    paddingRight: theme.spacing.unit * 1.5,
     paddingTop: theme.spacing.unit * 8,
     maxWidth: 1200,
     margin: "0 auto"
@@ -200,6 +203,7 @@ class App extends React.Component {
                 isLoading={this.state.isLoading}
                 bioFix={this.state.params.bioFix}
               />
+              <USMap />
             </Fragment>
           )}
         </main>
