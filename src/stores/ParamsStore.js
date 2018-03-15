@@ -11,7 +11,7 @@ import { format, startOfYear } from "date-fns";
 // fetch
 import fetchData from "../utils/fetchData";
 import cleanFetchedData from "../utils/cleanFetchedData";
-import transformData from "../utils/transformData";
+import currentModel from "../utils/currentModel";
 
 // const
 const url = `${
@@ -157,8 +157,8 @@ export default class ParamsStore {
     // clean and replacements
     const cleanedData = await cleanFetchedData(acisData, params.edate);
 
-    // transform data
-    const transformedData = await transformData(cleanedData, params.bioFix);
+    // transform data based on current model
+    const transformedData = await currentModel(cleanedData, params.bioFix);
 
     this.data = transformedData;
     this.isLoading = false;
