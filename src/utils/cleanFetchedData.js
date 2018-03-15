@@ -34,6 +34,7 @@ export default (acisData, edate) => {
 
     if (isSameYear(new Date(), new Date(edate))) {
       lastFiveDays.forEach(dayArr => {
+        console.log(dayArr);
         results.set(dayArr[0], dayArr[1].map(d => d.toString()));
       });
     }

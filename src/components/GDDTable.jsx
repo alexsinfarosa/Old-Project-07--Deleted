@@ -21,7 +21,8 @@ const styles = theme => ({
   root: {
     width: "100%",
     marginTop: theme.spacing.unit * 4,
-    overflowX: "auto"
+    overflowX: "auto",
+    borderRadius: 8
   },
   table: {
     // minWidth: 700,
@@ -46,7 +47,12 @@ const styles = theme => ({
 class GDDTable extends Component {
   render() {
     const { classes } = this.props;
-    const { data, isLoading, bioFix } = this.props.rootStore.paramsStore;
+    const {
+      dataForTable,
+      isLoading,
+      bioFix
+    } = this.props.rootStore.paramsStore;
+    console.log(dataForTable);
     return (
       <Paper className={classes.root}>
         {isLoading ? (
@@ -135,7 +141,7 @@ class GDDTable extends Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.slice(-8).map(o => {
+              {dataForTable.map(o => {
                 const isToday = isSameDay(new Date(), o.date);
                 return (
                   <TableRow hover key={o.date}>

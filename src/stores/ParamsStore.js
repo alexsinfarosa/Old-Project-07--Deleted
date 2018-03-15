@@ -163,6 +163,16 @@ export default class ParamsStore {
     this.data = transformedData;
     this.isLoading = false;
   };
+
+  get dataForTable() {
+    // const data = this.data.slice(0, this.data.length - 5);
+    // const date = format(this.edate, "YYYY-MM-DD");
+    // const dateIdx = data.findIndex(d => d.date === date);
+    // const s = dateIdx - 2;
+    // const e = dateIdx + 6;
+    // console.log(data, s, dateIdx, e);
+    return this.data.slice(-8);
+  }
 }
 
 decorate(ParamsStore, {
@@ -185,5 +195,6 @@ decorate(ParamsStore, {
   params: computed,
   setStateStationFromMap: action,
   data: observable,
-  setData: action
+  setData: action,
+  dataForTable: computed
 });

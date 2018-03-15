@@ -51,7 +51,7 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     flexShrink: 1,
-    // backgroundColor: "#fff",
+    backgroundColor: "#E7ECF0",
     paddingLeft: theme.spacing.unit * 1.5,
     paddingRight: theme.spacing.unit * 1.5,
     paddingTop: theme.spacing.unit * 8,
