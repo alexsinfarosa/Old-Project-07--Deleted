@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+import { inject, observer } from "mobx-react";
+
+// material-ui
+import withRoot from "../withRoot";
 import { withStyles } from "material-ui/styles";
 import Table, {
   TableBody,
@@ -9,8 +13,10 @@ import Table, {
 import Paper from "material-ui/Paper";
 import { CircularProgress } from "material-ui/Progress";
 
+// date
 import { format, isSameDay } from "date-fns";
 
+// styles
 const styles = theme => ({
   root: {
     width: "100%",
@@ -39,7 +45,8 @@ const styles = theme => ({
 
 class GDDTable extends Component {
   render() {
-    const { classes, data, isLoading, bioFix } = this.props;
+    const { classes } = this.props;
+    const { data, isLoading, bioFix } = this.props.rootStore.paramsStore;
     return (
       <Paper className={classes.root}>
         {isLoading ? (
@@ -226,4 +233,6 @@ class GDDTable extends Component {
   }
 }
 
-export default withStyles(styles)(GDDTable);
+export default withRoot(
+  withStyles(styles)(inject("rootStore")(observer(GDDTable)))
+);

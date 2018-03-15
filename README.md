@@ -1,1 +1,1 @@
-# NEWA Cranberry Fruitworm Model
+# NEWA Cranberry FruitWorm Model

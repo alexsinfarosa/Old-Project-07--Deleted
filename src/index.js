@@ -8,10 +8,18 @@ import registerServiceWorker from "./registerServiceWorker";
 import DateFnsUtils from "material-ui-pickers/utils/date-fns-utils";
 import MuiPickersUtilsProvider from "material-ui-pickers/utils/MuiPickersUtilsProvider";
 
+// Mobx
+import { Provider } from "mobx-react";
+import RootStore from "./stores/RootStore";
+const fetcher = url => window.fetch(url).then(response => response.json());
+const rootStore = new RootStore(fetcher);
+
 ReactDOM.render(
-  <MuiPickersUtilsProvider utils={DateFnsUtils}>
-    <App />
-  </MuiPickersUtilsProvider>,
+  <Provider rootStore={rootStore}>
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <App />
+    </MuiPickersUtilsProvider>
+  </Provider>,
   document.getElementById("root")
 );
 registerServiceWorker();

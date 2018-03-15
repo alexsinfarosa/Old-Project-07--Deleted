@@ -1,35 +1,23 @@
-import React, { Fragment } from "react";
+import React, { Component, Fragment } from "react";
+import { inject, observer } from "mobx-react";
 
-// material-ui
 import { withStyles } from "material-ui/styles";
 import withRoot from "./withRoot";
-import Drawer from "material-ui/Drawer";
-import AppBar from "material-ui/AppBar";
-import Toolbar from "material-ui/Toolbar";
-import Typography from "material-ui/Typography";
-import IconButton from "material-ui/IconButton";
-import Hidden from "material-ui/Hidden";
+import {
+  Drawer,
+  Hidden,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Modal
+} from "material-ui";
 import MenuIcon from "material-ui-icons/Menu";
-import Modal from "material-ui/Modal";
 
 // components
 import LeftPanel from "./components/LeftPanel";
 import GDDTable from "./components/GDDTable";
 import USMap from "./components/USMap";
-
-// fetch
-import fetchData, { fetchAllStations } from "./fetchData";
-import cleanFetchedData from "./cleanFetchedData";
-import transformData from "./transformData";
-
-// utils
-import { michiganIdAdjustment, networkTemperatureAdjustment } from "./utils";
-
-// data
-import states from "./assets/states.json";
-
-// date-fns
-import { format, startOfYear } from "date-fns";
 
 const drawerWidth = 250;
 const styles = theme => ({
@@ -80,70 +68,12 @@ const styles = theme => ({
   }
 });
 
-class App extends React.Component {
+class App extends Component {
   state = {
     isLoading: false,
     mobileOpen: false,
-    stations: [],
-    data: [],
-    params: {
-      statePC: {
-        postalCode: "ALL",
-        lat: 42.5,
-        lng: -75.7,
-        zoom: 6,
-        name: "All States",
-        bbox: [[30.22686, -104.0629], [49.38478, -69.92871]]
-      }
-    },
     isModalOpen: false
   };
-
-  setStateStation = station => {
-    const state = states.find(state => state.postalCode === station.state);
-    const params = { station, state };
-    this.setState({ params });
-    console.log(this.state);
-  };
-
-  loadData = async params => {
-    // console.log(params);
-    this.setState({ params, isLoading: true });
-    const { station, edate, bioFix } = params;
-    // build params
-    let p = {};
-    p.sid = `${michiganIdAdjustment(station)} ${station.network}`;
-    p.sdate = format(startOfYear(edate), "YYYY-MM-DD");
-    p.edate = format(edate, "YYYY-MM-DD");
-    p.bioFix = bioFix ? format(bioFix, "YYYY-MM-DD") : null;
-    p.meta = "tzo";
-    p.elems = networkTemperatureAdjustment(station.network);
-
-    console.log(p);
-    // fetching data
-    const acisData = await fetchData(p).then(res => res);
-
-    // clean and replacements
-    const cleanedData = await cleanFetchedData(acisData, p.edate);
-
-    // transform data
-    const transformedData = await transformData(cleanedData, p.bioFix);
-
-    this.setState({ data: transformedData, isLoading: false });
-  };
-
-  componentDidMount() {
-    fetchAllStations().then(res =>
-      this.setState({ stations: res, isLoading: false })
-    );
-  }
-
-  componentDidUpdate() {
-    localStorage.setItem(
-      "newa-cranberry-fruitworm-model",
-      JSON.stringify(this.state.params)
-    );
-  }
 
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
@@ -159,6 +89,8 @@ class App extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const { data } = this.props.rootStore.paramsStore;
+
     return (
       <div className={classes.root}>
         <AppBar className={classes.appBar}>
@@ -200,12 +132,12 @@ class App extends React.Component {
               keepMounted: true // Better open performance on mobile.
             }}
           >
-            <LeftPanel
+            {/*<LeftPanel
               stations={this.state.stations}
               loadData={this.loadData}
               closeDrawer={this.closeDrawer}
               toggleModal={this.toggleModal}
-            />
+            />*/}
           </Drawer>
         </Hidden>
 
@@ -218,26 +150,23 @@ class App extends React.Component {
             }}
           >
             <LeftPanel
-              stations={this.state.stations}
-              loadData={this.loadData}
+              // loadData={this.loadData}
               closeDrawer={this.closeDrawer}
               toggleModal={this.toggleModal}
             />
           </Drawer>
         </Hidden>
 
+        {/* main content */}
         <main className={classes.content}>
-          {this.state.data.length !== 0 && (
+          {data.length !== 0 && (
             <Fragment>
-              <GDDTable
-                data={this.state.data}
-                isLoading={this.state.isLoading}
-                bioFix={this.state.params.bioFix}
-              />
+              <GDDTable />
             </Fragment>
           )}
         </main>
 
+        {/* US map */}
         <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
@@ -248,7 +177,7 @@ class App extends React.Component {
             <USMap
               params={this.state.params}
               stations={this.state.stations}
-              setStateStation={this.state.setStateStation}
+              toggleModal={this.toggleModal}
             />
           </div>
         </Modal>
@@ -257,4 +186,4 @@ class App extends React.Component {
   }
 }
 
-export default withRoot(withStyles(styles)(App));
+export default withRoot(withStyles(styles)(inject("rootStore")(observer(App))));

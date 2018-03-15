@@ -1,18 +1,24 @@
 import React, { Component, Fragment } from "react";
+import { inject, observer } from "mobx-react";
+
 import { withStyles } from "material-ui/styles";
+import withRoot from "../withRoot";
+
 import { InputLabel } from "material-ui/Input";
 import { MenuItem } from "material-ui/Menu";
 import { FormControl } from "material-ui/Form";
-import Select from "material-ui/Select";
-import Button from "material-ui/Button";
-import { IconButton, Typography, Icon, InputAdornment } from "material-ui";
+import {
+  Select,
+  // Button,
+  IconButton,
+  Typography,
+  Icon,
+  InputAdornment
+} from "material-ui";
 import PlaceIcon from "material-ui-icons/Place";
 
 // picker
 import { DatePicker } from "material-ui-pickers";
-
-// data
-import states from "../assets/states.json";
 
 const styles = theme => ({
   root: {
@@ -49,105 +55,42 @@ const styles = theme => ({
 });
 
 class LeftPanel extends Component {
-  state = {
-    statePC: {
-      postalCode: "ALL",
-      lat: 42.5,
-      lng: -75.7,
-      zoom: 6,
-      name: "All States",
-      bbox: [[30.22686, -104.0629], [49.38478, -69.92871]]
-    },
-    station: {},
-    edate: new Date(),
-    bioFix: null
-  };
-
-  componentDidMount() {
-    console.log(this.state);
-    // first reinstate localstorage
-    const localStorageRef = localStorage.getItem(
-      "newa-cranberry-fruitworm-model"
-    );
-    if (localStorageRef) {
-      const params = JSON.parse(localStorageRef);
-
-      if (Object.keys(params).length !== 0) {
-        this.setState({
-          statePC: params.statePC,
-          station: params.station,
-          edate: new Date(),
-          bioFix: params.bioFix
-        });
-
-        this.props.loadData({
-          statePC: params.statePC,
-          station: params.station,
-          edate: new Date(),
-          bioFix: params.bioFix
-        });
-      }
-    }
-  }
-
-  componentDidUpdate() {
-    // this.props.loadData({
-    //   statePC: this.state.statePC,
-    //   station: this.state.station,
-    //   edate: new Date(),
-    //   bioFix: this.state.bioFix
-    // });
-  }
-
-  handleChange = event => {
-    if (event.target.name === "station" || event.target.name === "statePC") {
-      this.setState({ [event.target.name]: JSON.parse(event.target.value) });
-    }
-    this.setState({ [event.target.name]: event.target.value });
-  };
-
-  handleEDateChange = edate => {
-    console.log(edate);
-    this.setState({ edate });
-  };
-
-  handleBioFixChange = bioFix => {
-    this.setState({ bioFix });
-  };
-
   handleSubmit = e => {
     e.preventDefault();
-
-    this.props.loadData({
-      statePC: this.state.statePC,
-      station: this.state.station,
-      edate: this.state.edate,
-      bioFix: this.state.bioFix
-    });
-
     this.props.closeDrawer();
+    console.log(this.props.rootStore.paramsStore.params);
   };
 
   render() {
     const { classes } = this.props;
+    const {
+      states,
+      postalCode,
+      setPostalCode,
+      stationID,
+      setStationID,
+      filteredStationList,
+      edate,
+      setEDate,
+      bioFix,
+      setBioFix
+      // disableCalculateButton
+    } = this.props.rootStore.paramsStore;
 
     const stateList = states.map(state => (
-      <MenuItem key={state.postalCode} value={JSON.stringify(state)}>
+      <MenuItem key={state.postalCode} value={state.postalCode}>
         {state.name}
       </MenuItem>
     ));
 
-    let filteredStationList = this.props.stations.filter(
-      station => station.state === this.state.statePC.postalCode
-    );
-    if (filteredStationList.length === 0)
-      filteredStationList = this.props.stations;
-
-    const stationList = filteredStationList.map(station => (
-      <MenuItem key={station.id} value={JSON.stringify(station)}>
-        {station.name}
-      </MenuItem>
-    ));
+    let stationList = [];
+    if (filteredStationList) {
+      stationList = filteredStationList.map(station => (
+        <MenuItem key={station.id} value={station.id}>
+          {station.name}
+        </MenuItem>
+      ));
+    }
 
     return (
       <Fragment>
@@ -170,7 +113,6 @@ class LeftPanel extends Component {
           onSubmit={this.handleSubmit}
         >
           {/* state */}
-
           <FormControl className={classes.formControl}>
             <InputLabel htmlFor="statePC">
               State<IconButton
@@ -191,8 +133,8 @@ class LeftPanel extends Component {
             <Select
               style={{ marginTop: 10 }}
               autoWidth={true}
-              value={JSON.stringify(this.state.statePC)}
-              onChange={this.handleChange}
+              value={postalCode}
+              onChange={setPostalCode}
               inputProps={{
                 name: "statePC",
                 id: "statePC"
@@ -205,14 +147,12 @@ class LeftPanel extends Component {
           {/* station */}
           <FormControl className={classes.formControl}>
             <InputLabel htmlFor="station">
-              Station ({this.state.statePC === "ALL"
-                ? this.props.stations.length
-                : stationList.length})
+              Station ({stationList.length})
             </InputLabel>
             <Select
               autoWidth={true}
-              value={JSON.stringify(this.state.station)}
-              onChange={this.handleChange}
+              value={stationID}
+              onChange={setStationID}
               inputProps={{
                 name: "station",
                 id: "station"
@@ -226,8 +166,8 @@ class LeftPanel extends Component {
             <DatePicker
               label="Date of Interest"
               maxDateMessage="Date must be less than today"
-              value={this.state.edate}
-              onChange={this.handleEDateChange}
+              value={edate}
+              onChange={setEDate}
               format="MMMM Do YYYY"
               disableFuture={true}
               InputProps={{
@@ -247,8 +187,8 @@ class LeftPanel extends Component {
               label="BioFix Date"
               // helperText="Possible manual entry via keyboard"
               maxDateMessage="Date must be less than date of interest"
-              value={this.state.bioFix}
-              onChange={this.handleBioFixChange}
+              value={bioFix}
+              onChange={setBioFix}
               format="MMMM Do YYYY"
               disableFuture={true}
               InputProps={{
@@ -263,21 +203,21 @@ class LeftPanel extends Component {
             />
           </FormControl>
 
-          <Button
+          {/*<Button
             variant="raised"
             color="primary"
             className={classes.formControl}
             type="submit"
-            disabled={
-              Object.keys(this.state.station).length === 0 ? true : false
-            }
+            disabled={disableCalculateButton}
           >
             Calculate
-          </Button>
+          </Button>*/}
         </form>
       </Fragment>
     );
   }
 }
 
-export default withStyles(styles)(LeftPanel);
+export default withRoot(
+  withStyles(styles)(inject("rootStore")(observer(LeftPanel)))
+);
