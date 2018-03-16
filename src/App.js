@@ -60,13 +60,6 @@ const styles = theme => ({
   link: {
     color: "#fff",
     textDecoration: "none"
-  },
-  modal: {
-    width: "50%",
-    height: "50%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
   }
 });
 
