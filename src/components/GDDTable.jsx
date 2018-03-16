@@ -23,7 +23,7 @@ const styles = theme => ({
     width: "100%",
     maxWidth: 1200,
     margin: "0 auto",
-    // marginTop: theme.spacing.unit * 4,
+    marginTop: theme.spacing.unit * 4,
     overflowX: "auto",
     borderRadius: 8
   },
@@ -44,6 +44,9 @@ const styles = theme => ({
     justifyContent: "center",
     alignContent: "center",
     borderRight: "1px solid #eee"
+  },
+  missingDays: {
+    marginTop: theme.spacing.unit * 4
   }
 });
 
@@ -62,7 +65,7 @@ class GDDTable extends Component {
       <Fragment>
         {/* Missing Days */}
         {missingDays.length !== 0 && (
-          <Typography variant="subheading" style={{ margin: "16px 0" }}>
+          <Typography variant="subheading" className={classes.missingDays}>
             {`(+${missingDays.length}) ${
               missingDays.length === 1 ? "day" : "days"
             } missing: 
