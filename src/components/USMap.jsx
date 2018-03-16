@@ -93,7 +93,7 @@ class USMap extends Component {
             <GeoJSON
               data={this.state.geojson}
               style={{
-                color: pink[300],
+                color: pink[200],
                 weight: 1
                 // opacity: 0.65
               }}

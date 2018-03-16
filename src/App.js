@@ -55,7 +55,6 @@ const styles = theme => ({
     paddingLeft: theme.spacing.unit * 1.5,
     paddingRight: theme.spacing.unit * 1.5,
     paddingTop: theme.spacing.unit * 8,
-    maxWidth: 1200,
     margin: "0 auto"
   },
   link: {

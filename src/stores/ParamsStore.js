@@ -88,9 +88,12 @@ export default class ParamsStore {
     }
   }
 
-  //   edate
+  //   date of interest
   dateOfInterest = new Date();
-  setDateOfInterest = d => (this.dateOfInterest = d);
+  setDateOfInterest = d => {
+    console.log(d);
+    this.dateOfInterest = d;
+  };
 
   //   bioFix
   bioFix = null;

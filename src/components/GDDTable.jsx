@@ -20,6 +20,8 @@ import { format, isSameDay } from "date-fns";
 const styles = theme => ({
   root: {
     width: "100%",
+    maxWidth: 1200,
+    margin: "0 auto",
     marginTop: theme.spacing.unit * 4,
     overflowX: "auto",
     borderRadius: 8
@@ -76,7 +78,8 @@ class GDDTable extends Component {
                   style={{
                     textAlign: "center",
                     margin: 0,
-                    padding: 0
+                    padding: 0,
+                    borderRight: "1px solid #E0E0E0"
                   }}
                 >
                   Date

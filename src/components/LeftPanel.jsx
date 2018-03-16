@@ -9,16 +9,16 @@ import { MenuItem } from "material-ui/Menu";
 import { FormControl } from "material-ui/Form";
 import {
   Select,
-  // Button,
   IconButton,
+  Button,
   Typography,
   Icon,
   InputAdornment
 } from "material-ui";
 import PlaceIcon from "material-ui-icons/Place";
 
-// picker
-import { DatePicker } from "material-ui-pickers";
+// Date picker
+import DatePicker from "material-ui-pickers/DatePicker";
 
 const styles = theme => ({
   root: {
@@ -51,6 +51,10 @@ const styles = theme => ({
   link: {
     color: "#a52c25",
     textDecoration: "none"
+  },
+  iconMap: {
+    margin: "0 auto",
+    marginTop: theme.spacing.unit * 2
   }
 });
 
@@ -107,6 +111,17 @@ class LeftPanel extends Component {
           </Typography>
         </div>
 
+        <Button
+          variant="fab"
+          mini
+          onClick={this.props.toggleModal}
+          aria-label="map"
+          color="primary"
+          className={classes.iconMap}
+        >
+          <PlaceIcon />
+        </Button>
+
         <form
           className={classes.root}
           autoComplete="off"
@@ -114,30 +129,16 @@ class LeftPanel extends Component {
         >
           {/* state */}
           <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="statePC">
-              State<IconButton
-                onClick={this.props.toggleModal}
-                aria-label="map"
-                color="primary"
-                style={{
-                  margin: 0,
-                  padding: 0,
-                  fontSize: 30,
-                  marginBottom: 10
-                }}
-              >
-                <PlaceIcon />
-              </IconButton>
-            </InputLabel>
-            <br />
+            <InputLabel htmlFor="postalCode">State</InputLabel>
+
             <Select
-              style={{ marginTop: 10 }}
+              // style={{ marginTop: 10 }}
               autoWidth={true}
               value={postalCode}
               onChange={setPostalCode}
               inputProps={{
-                name: "statePC",
-                id: "statePC"
+                name: "postalCode",
+                id: "postalCode"
               }}
             >
               {stateList}
@@ -146,7 +147,7 @@ class LeftPanel extends Component {
 
           {/* station */}
           <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="station">
+            <InputLabel htmlFor="stationID">
               Station ({stationList.length})
             </InputLabel>
             <Select
@@ -154,22 +155,22 @@ class LeftPanel extends Component {
               value={stationID}
               onChange={setStationID}
               inputProps={{
-                name: "station",
-                id: "station"
+                name: "stationID",
+                id: "stationID"
               }}
             >
               {stationList}
             </Select>
           </FormControl>
 
-          <FormControl className={classes.formControl}>
+          <div className={classes.formControl}>
             <DatePicker
               label="Date of Interest"
-              maxDateMessage="Date must be less than today"
               value={dateOfInterest}
               onChange={setDateOfInterest}
               format="MMMM Do YYYY"
-              disableFuture={true}
+              disableFuture
+              animateYearScrolling={false}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -180,9 +181,9 @@ class LeftPanel extends Component {
                 )
               }}
             />
-          </FormControl>
+          </div>
 
-          <FormControl className={classes.formControl}>
+          <div className={classes.formControl}>
             <DatePicker
               label="BioFix Date"
               // helperText="Possible manual entry via keyboard"
@@ -201,17 +202,7 @@ class LeftPanel extends Component {
                 )
               }}
             />
-          </FormControl>
-
-          {/*<Button
-            variant="raised"
-            color="primary"
-            className={classes.formControl}
-            type="submit"
-            disabled={disableCalculateButton}
-          >
-            Calculate
-          </Button>*/}
+          </div>
         </form>
       </Fragment>
     );
