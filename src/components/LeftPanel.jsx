@@ -70,8 +70,8 @@ class LeftPanel extends Component {
       stationID,
       setStationID,
       filteredStationList,
-      edate,
-      setEDate,
+      dateOfInterest,
+      setDateOfInterest,
       bioFix,
       setBioFix
       // disableCalculateButton
@@ -166,8 +166,8 @@ class LeftPanel extends Component {
             <DatePicker
               label="Date of Interest"
               maxDateMessage="Date must be less than today"
-              value={edate}
-              onChange={setEDate}
+              value={dateOfInterest}
+              onChange={setDateOfInterest}
               format="MMMM Do YYYY"
               disableFuture={true}
               InputProps={{

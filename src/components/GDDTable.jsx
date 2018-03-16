@@ -52,7 +52,7 @@ class GDDTable extends Component {
       isLoading,
       bioFix
     } = this.props.rootStore.paramsStore;
-    console.log(dataForTable);
+
     return (
       <Paper className={classes.root}>
         {isLoading ? (

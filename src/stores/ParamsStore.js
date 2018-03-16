@@ -6,7 +6,7 @@ import axios from "axios";
 import { idAdjustment, networkTemperatureAdjustment } from "../utils/utils";
 
 // date-fns
-import { format, startOfYear } from "date-fns";
+import { format, startOfYear, isSameYear } from "date-fns";
 
 // fetch
 import fetchData from "../utils/fetchData";
@@ -89,8 +89,8 @@ export default class ParamsStore {
   }
 
   //   edate
-  edate = new Date();
-  setEDate = d => (this.edate = d);
+  dateOfInterest = new Date();
+  setDateOfInterest = d => (this.dateOfInterest = d);
 
   //   bioFix
   bioFix = null;
@@ -113,7 +113,7 @@ export default class ParamsStore {
       if (Object.keys(params).length !== 0) {
         this.postalCode = params.postalCode;
         this.stationID = params.stationID;
-        this.eDate = params.edate;
+        this.dateOfInterest = params.dateOfInterest;
         this.bioFix = params.bioFix;
       }
     }
@@ -123,20 +123,27 @@ export default class ParamsStore {
     return {
       postalCode: this.postalCode,
       stationID: this.stationID,
-      edate: this.edate,
+      dateOfInterest: this.dateOfInterest,
       bioFix: this.bioFix
     };
+  }
+
+  get edate() {
+    if (isSameYear(new Date(), new Date(this.dateOfInterest))) {
+      return format(new Date(), "YYYY-MM-DD");
+    } else {
+      return format(this.dateOfInterest, "YYYY-MM-DD");
+    }
   }
 
   get params() {
     if (this.station) {
       return {
         sid: `${idAdjustment(this.station)} ${this.station.network}`,
-        sdate: format(startOfYear(this.edate), "YYYY-MM-DD"),
-        edate: format(this.edate, "YYYY-MM-DD"),
+        sdate: format(startOfYear(this.dateOfInterest), "YYYY-MM-DD"),
+        edate: this.edate,
         elems: networkTemperatureAdjustment(this.station.network),
-        meta: "tzo",
-        bioFix: this.bioFix ? format(this.bioFix, "YYYY-MM-DD") : null
+        meta: "tzo"
       };
     }
   }
@@ -152,25 +159,18 @@ export default class ParamsStore {
 
     // fetching data
     const acisData = await fetchData(params).then(res => res);
-    // console.log(acisData);
 
     // clean and replacements
-    const cleanedData = await cleanFetchedData(acisData, params.edate);
+    const cleanedData = await cleanFetchedData(acisData, this.asJson);
 
     // transform data based on current model
-    const transformedData = await currentModel(cleanedData, params.bioFix);
+    const transformedData = await currentModel(cleanedData, this.asJson);
 
     this.data = transformedData;
     this.isLoading = false;
   };
 
   get dataForTable() {
-    // const data = this.data.slice(0, this.data.length - 5);
-    // const date = format(this.edate, "YYYY-MM-DD");
-    // const dateIdx = data.findIndex(d => d.date === date);
-    // const s = dateIdx - 2;
-    // const e = dateIdx + 6;
-    // console.log(data, s, dateIdx, e);
     return this.data.slice(-8);
   }
 }
@@ -186,8 +186,9 @@ decorate(ParamsStore, {
   stations: observable,
   setStations: action,
   filteredStationList: computed,
-  edate: observable,
-  setEDate: action,
+  dateOfInterest: observable,
+  setDateOfInterest: action,
+  edate: computed,
   bioFix: observable,
   setBioFix: action,
   asJson: computed,

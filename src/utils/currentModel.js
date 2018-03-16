@@ -1,9 +1,16 @@
 import { average } from "./utils";
+import { format } from "date-fns";
 
-export default (cleanedData, bioFix) => {
-  // console.log(cleanedData, bioFix);
-  const dates = [...cleanedData.keys()];
-  const hrTemps = [...cleanedData.values()];
+export default (cleanedData, asJson) => {
+  const arr = [...cleanedData.entries()];
+
+  // slice cleanData up to dateOfInterest
+  const dateOfInterest = format(asJson.dateOfInterest, "YYYY-MM-DD");
+  const dateOfInterestIdx = arr.findIndex(d => d[0] === dateOfInterest);
+
+  // add 5 days for consistency in the GDDTable
+  const dates = arr.slice(0, dateOfInterestIdx + 6).map(d => d[0]);
+  const hrTemps = arr.slice(0, dateOfInterestIdx + 6).map(d => d[1]);
 
   // handle accumulation from March 1st
   const datesArr = dates.map(d => d.split("-"));
@@ -12,6 +19,7 @@ export default (cleanedData, bioFix) => {
 
   // handle bioFix
   let bioFixIdx;
+  const bioFix = asJson.bioFix ? format(asJson.bioFix, "YYYY-MM-DD") : null;
   if (bioFix) {
     const bioFixArr = bioFix.split("-");
     const bioFixNoYear = bioFixArr.slice(1).join("-");
@@ -30,6 +38,8 @@ export default (cleanedData, bioFix) => {
 
     // calculate dd (degree day)
     const dd = avg - base > 0 ? avg - base : 0;
+
+    // accumulation from Jannuary 1st
     cdd += dd;
 
     // start accumulation from March 1st
@@ -49,7 +59,7 @@ export default (cleanedData, bioFix) => {
     p.avg = avg;
     p.max = Math.max(...arr);
     p.cddFromMarch1 = cddFromMarch1;
-    p.cddBioFix = bioFix ? cddBioFix : "-";
+    p.cddBioFix = asJson.bioFix ? cddBioFix : "-";
 
     results.push(p);
   });
