@@ -131,12 +131,7 @@ class App extends Component {
               keepMounted: true // Better open performance on mobile.
             }}
           >
-            {/*<LeftPanel
-              stations={this.state.stations}
-              loadData={this.loadData}
-              closeDrawer={this.closeDrawer}
-              toggleModal={this.toggleModal}
-            />*/}
+            <LeftPanel closeDrawer={this.closeDrawer} />
           </Drawer>
         </Hidden>
 
@@ -148,11 +143,7 @@ class App extends Component {
               paper: classes.drawerPaper
             }}
           >
-            <LeftPanel
-              // loadData={this.loadData}
-              closeDrawer={this.closeDrawer}
-              toggleModal={this.toggleModal}
-            />
+            <LeftPanel closeDrawer={this.closeDrawer} />
           </Drawer>
         </Hidden>
 

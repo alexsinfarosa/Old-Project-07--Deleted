@@ -59,12 +59,6 @@ const styles = theme => ({
 });
 
 class LeftPanel extends Component {
-  handleSubmit = e => {
-    e.preventDefault();
-    this.props.closeDrawer();
-    console.log(this.props.rootStore.paramsStore.params);
-  };
-
   render() {
     const { classes } = this.props;
     const {
@@ -78,7 +72,6 @@ class LeftPanel extends Component {
       setDateOfInterest,
       bioFix,
       setBioFix
-      // disableCalculateButton
     } = this.props.rootStore.paramsStore;
 
     const stateList = states.map(state => (
@@ -153,7 +146,10 @@ class LeftPanel extends Component {
             <Select
               autoWidth={true}
               value={stationID}
-              onChange={setStationID}
+              onChange={e => {
+                setStationID(e);
+                this.props.closeDrawer();
+              }}
               inputProps={{
                 name: "stationID",
                 id: "stationID"
@@ -167,7 +163,10 @@ class LeftPanel extends Component {
             <DatePicker
               label="Date of Interest"
               value={dateOfInterest}
-              onChange={setDateOfInterest}
+              onChange={e => {
+                setDateOfInterest(e);
+                this.props.closeDrawer();
+              }}
               format="MMMM Do, YYYY"
               disableFuture
               InputProps={{
@@ -188,7 +187,10 @@ class LeftPanel extends Component {
               // helperText="Possible manual entry via keyboard"
               maxDateMessage="Date must be less than date of interest"
               value={bioFix}
-              onChange={setBioFix}
+              onChange={e => {
+                setBioFix(e);
+                this.props.closeDrawer();
+              }}
               format="MMMM Do, YYYY"
               disableFuture={true}
               InputProps={{
