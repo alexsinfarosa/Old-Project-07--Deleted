@@ -62,8 +62,11 @@ const styles = theme => ({
     textDecoration: "none"
   },
   modal: {
-    width: "100%",
-    height: "50vh"
+    width: "50%",
+    height: "50%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
 
@@ -163,13 +166,20 @@ class App extends Component {
         </main>
 
         {/* US map */}
+
         <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
+          disableAutoFocus={true}
           open={this.state.isModalOpen}
           onClose={this.toggleModal}
+          style={{
+            width: "100%",
+            height: "50%",
+            margin: "100px auto"
+          }}
         >
-          <div className={classes.modal}>
+          <div style={{ width: "100%", height: "100%" }}>
             <USMap
               params={this.state.params}
               stations={this.state.stations}
