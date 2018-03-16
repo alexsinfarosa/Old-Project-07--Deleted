@@ -6,7 +6,7 @@ import axios from "axios";
 import { idAdjustment, networkTemperatureAdjustment } from "../utils/utils";
 
 // date-fns
-import { format, startOfYear, isSameYear } from "date-fns";
+import { format, startOfYear, isSameYear, isAfter } from "date-fns";
 
 // fetch
 import fetchData from "../utils/fetchData";
@@ -90,14 +90,15 @@ export default class ParamsStore {
 
   //   date of interest
   dateOfInterest = new Date();
-  setDateOfInterest = d => {
-    console.log(d);
-    this.dateOfInterest = d;
-  };
+  setDateOfInterest = d => (this.dateOfInterest = d);
 
   //   bioFix
   bioFix = null;
-  setBioFix = d => (this.bioFix = d);
+  setBioFix = d => {
+    isAfter(new Date(d), this.dateOfInterest)
+      ? (this.bioFix = this.dateOfInterest)
+      : (this.bioFix = d);
+  };
 
   //   localstorage
   writeToLocalstorage = json => {

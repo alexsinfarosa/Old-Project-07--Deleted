@@ -170,7 +170,6 @@ class LeftPanel extends Component {
               onChange={setDateOfInterest}
               format="MMMM Do, YYYY"
               disableFuture
-              animateYearScrolling={false}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
