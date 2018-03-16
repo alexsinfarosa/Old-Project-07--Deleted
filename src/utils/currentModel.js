@@ -81,6 +81,6 @@ export default (cleanedData, asJson) => {
     results.push(p);
   });
 
-  console.log({ results, missingDays });
+  // console.log({ results, missingDays });
   return { results, missingDays };
 };
