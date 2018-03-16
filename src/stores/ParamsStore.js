@@ -6,7 +6,7 @@ import axios from "axios";
 import { idAdjustment, networkTemperatureAdjustment } from "../utils/utils";
 
 // date-fns
-import { format, startOfYear, isSameYear, isAfter } from "date-fns";
+import { format, startOfYear, isSameYear, isAfter, addDays } from "date-fns";
 
 // fetch
 import fetchData from "../utils/fetchData";
@@ -134,9 +134,12 @@ export default class ParamsStore {
 
   get edate() {
     if (isSameYear(new Date(), new Date(this.dateOfInterest))) {
+      // if current year fetch data up to today
       return format(new Date(), "YYYY-MM-DD");
     } else {
-      return format(this.dateOfInterest, "YYYY-MM-DD");
+      // if NOT current year fetch data up to date of interest + 5 days
+      // +5 days to make the table the same as when current year
+      return format(addDays(this.dateOfInterest, 5), "YYYY-MM-DD");
     }
   }
 
@@ -158,6 +161,7 @@ export default class ParamsStore {
   };
 
   data = [];
+  missingDays = [];
   setData = async params => {
     this.isLoading = true;
 
@@ -168,9 +172,13 @@ export default class ParamsStore {
     const cleanedData = await cleanFetchedData(acisData, this.asJson);
 
     // transform data based on current model
-    const transformedData = await currentModel(cleanedData, this.asJson);
-
-    this.data = transformedData;
+    const { results, missingDays } = await currentModel(
+      cleanedData,
+      this.asJson
+    );
+    console.log(results, missingDays);
+    this.data = results;
+    this.missingDays = missingDays;
     this.isLoading = false;
   };
 
@@ -200,6 +208,7 @@ decorate(ParamsStore, {
   params: computed,
   setStateStationFromMap: action,
   data: observable,
+  missingDays: observable,
   setData: action,
   dataForTable: computed
 });
