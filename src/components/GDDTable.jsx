@@ -52,7 +52,8 @@ class GDDTable extends Component {
     const {
       dataForTable,
       isLoading,
-      bioFix
+      bioFix,
+      dateOfInterest
     } = this.props.rootStore.paramsStore;
 
     return (
@@ -145,7 +146,7 @@ class GDDTable extends Component {
             </TableHead>
             <TableBody>
               {dataForTable.map(o => {
-                const isToday = isSameDay(new Date(), o.date);
+                const isToday = isSameDay(new Date(dateOfInterest), o.date);
                 return (
                   <TableRow hover key={o.date}>
                     <TableCell
@@ -157,7 +158,7 @@ class GDDTable extends Component {
                         fontWeight: isToday ? 700 : null
                       }}
                     >
-                      {isToday ? "Today" : format(o.date, "MMMM DD")}
+                      {format(o.date, "MMMM Do")}
                     </TableCell>
                     <TableCell
                       className={classes.tableCell}

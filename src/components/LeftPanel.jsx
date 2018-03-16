@@ -168,7 +168,7 @@ class LeftPanel extends Component {
               label="Date of Interest"
               value={dateOfInterest}
               onChange={setDateOfInterest}
-              format="MMMM Do YYYY"
+              format="MMMM Do, YYYY"
               disableFuture
               animateYearScrolling={false}
               InputProps={{
@@ -190,7 +190,7 @@ class LeftPanel extends Component {
               maxDateMessage="Date must be less than date of interest"
               value={bioFix}
               onChange={setBioFix}
-              format="MMMM Do YYYY"
+              format="MMMM Do, YYYY"
               disableFuture={true}
               InputProps={{
                 endAdornment: (
