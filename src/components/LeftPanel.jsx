@@ -159,8 +159,10 @@ class LeftPanel extends Component {
             </Select>
           </FormControl>
 
+          {/* date of interest */}
           <div className={classes.formControl}>
             <DatePicker
+              style={{ width: "100%" }}
               label="Date of Interest"
               value={dateOfInterest}
               onChange={e => {
@@ -172,7 +174,7 @@ class LeftPanel extends Component {
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
-                    <IconButton>
+                    <IconButton style={{ marginRight: -8 }}>
                       <Icon>date_range</Icon>
                     </IconButton>
                   </InputAdornment>
@@ -181,8 +183,10 @@ class LeftPanel extends Component {
             />
           </div>
 
+          {/* bioFix */}
           <div className={classes.formControl}>
             <DatePicker
+              style={{ width: "100%" }}
               label="BioFix Date"
               // helperText="Possible manual entry via keyboard"
               maxDateMessage="Date must be less than date of interest"
@@ -196,7 +200,7 @@ class LeftPanel extends Component {
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
-                    <IconButton>
+                    <IconButton style={{ marginRight: -8 }}>
                       <Icon>date_range</Icon>
                     </IconButton>
                   </InputAdornment>
