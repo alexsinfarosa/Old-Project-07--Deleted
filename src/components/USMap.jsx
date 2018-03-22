@@ -36,7 +36,9 @@ class USMap extends Component {
 
     const { postalCode } = this.props.rootStore.paramsStore;
     if (postalCode !== "ALL") {
-      const url = `http://data.rcc-acis.org/General/state?state=${postalCode}&meta=name,geojson`;
+      const url = `${
+        window.location.protocol
+      }//data.rcc-acis.org/General/state?state=${postalCode}&meta=name,geojson`;
 
       fetch(url)
         .then(res => res.json())
