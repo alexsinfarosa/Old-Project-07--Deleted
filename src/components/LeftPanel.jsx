@@ -159,7 +159,6 @@ class LeftPanel extends Component {
             </Select>
           </FormControl>
 
-          {/* date of interest */}
           <div className={classes.formControl}>
             <DatePicker
               style={{ width: "100%" }}
@@ -183,7 +182,6 @@ class LeftPanel extends Component {
             />
           </div>
 
-          {/* bioFix */}
           <div className={classes.formControl}>
             <DatePicker
               style={{ width: "100%" }}

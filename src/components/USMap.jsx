@@ -51,7 +51,6 @@ class USMap extends Component {
     const { setStateStationFromMap } = this.props.rootStore.paramsStore;
     setStateStationFromMap(station);
     this.props.toggleModal();
-    this.props.closeDrawer();
   };
 
   render() {

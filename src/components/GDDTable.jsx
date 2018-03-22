@@ -23,7 +23,7 @@ const styles = theme => ({
     width: "100%",
     maxWidth: 1200,
     margin: "0 auto",
-    marginTop: theme.spacing.unit * 4,
+    marginTop: theme.spacing.unit * 2,
     overflowX: "auto",
     borderRadius: 8
   },
@@ -37,7 +37,12 @@ const styles = theme => ({
     }
   },
   tableCell: {
-    padding: "0 10px"
+    fontSize: "0.8rem",
+    padding: "0 10px",
+    textAlign: "center",
+    "@media (min-width: 576px)": {
+      fontSize: "0.8rem"
+    }
   },
   tableHeader: {
     display: "flex",
@@ -46,7 +51,7 @@ const styles = theme => ({
     borderRight: "1px solid #eee"
   },
   missingDays: {
-    marginTop: theme.spacing.unit * 4
+    marginTop: theme.spacing.unit * 1
   }
 });
 
@@ -63,23 +68,6 @@ class GDDTable extends Component {
 
     return (
       <Fragment>
-        {/* Missing Days */}
-        {missingDays.length !== 0 && (
-          <Typography variant="subheading" className={classes.missingDays}>
-            {`(+${missingDays.length}) ${
-              missingDays.length === 1 ? "day" : "days"
-            } missing: 
-          `}
-            {missingDays.map((d, i) => {
-              if (i === missingDays.length - 1) {
-                return <span key={d}>{format(d, "MMMM Do")}.</span>;
-              } else {
-                return <span key={d}>{format(d, "MMMM Do")}, </span>;
-              }
-            })}
-          </Typography>
-        )}
-
         <Paper className={classes.root}>
           {isLoading ? (
             <div
@@ -265,6 +253,22 @@ class GDDTable extends Component {
             </Table>
           )}
         </Paper>
+        {/* Missing Days */}
+        {missingDays.length !== 0 && (
+          <Typography variant="caption" className={classes.missingDays}>
+            {`(+${missingDays.length}) ${
+              missingDays.length === 1 ? "day" : "days"
+            } missing: 
+                  `}
+            {missingDays.map((d, i) => {
+              if (i === missingDays.length - 1) {
+                return <span key={d}>{format(d, "MMMM Do")}.</span>;
+              } else {
+                return <span key={d}>{format(d, "MMMM Do")}, </span>;
+              }
+            })}
+          </Typography>
+        )}
       </Fragment>
     );
   }

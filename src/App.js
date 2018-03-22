@@ -16,6 +16,7 @@ import MenuIcon from "material-ui-icons/Menu";
 
 // components
 import LeftPanel from "./components/LeftPanel";
+import Header from "./components/Header";
 import GDDTable from "./components/GDDTable";
 import USMap from "./components/USMap";
 
@@ -60,6 +61,14 @@ const styles = theme => ({
   link: {
     color: "#fff",
     textDecoration: "none"
+  },
+  header: {
+    fontSize: "1rem",
+    color: "white",
+    "@media (min-width: 576px)": {
+      fontSize: "1.4rem",
+      letterSpacing: 1
+    }
   }
 });
 
@@ -84,7 +93,7 @@ class App extends Component {
 
   render() {
     const { classes } = this.props;
-    const { data } = this.props.rootStore.paramsStore;
+    const { data, station } = this.props.rootStore.paramsStore;
 
     return (
       <div className={classes.root}>
@@ -98,7 +107,7 @@ class App extends Component {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="title" color="inherit" noWrap>
+            <Typography variant="title" noWrap className={classes.header}>
               Cranberry Fruitworm Model
             </Typography>
             <Typography variant="subheading" style={{ marginLeft: "auto" }}>
@@ -151,11 +160,13 @@ class App extends Component {
 
         {/* main content */}
         <main className={classes.content}>
-          {data.length !== 0 && (
-            <Fragment>
-              <GDDTable />
-            </Fragment>
-          )}
+          {data.length !== 0 &&
+            station && (
+              <Fragment>
+                <Header />
+                <GDDTable />
+              </Fragment>
+            )}
         </main>
 
         {/* US map */}
@@ -177,7 +188,6 @@ class App extends Component {
               params={this.state.params}
               stations={this.state.stations}
               toggleModal={this.toggleModal}
-              closeDrawer={this.closeDrawer}
             />
           </div>
         </Modal>
