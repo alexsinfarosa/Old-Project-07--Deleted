@@ -1,4 +1,4 @@
-import { replaceNonConsecutiveMissingValues } from "./utils";
+import { replaceNonConsecutiveMissingValues } from "../utils/utils";
 import { isSameYear } from "date-fns";
 
 export default (acisData, asJson) => {

@@ -188,6 +188,7 @@ class App extends Component {
               params={this.state.params}
               stations={this.state.stations}
               toggleModal={this.toggleModal}
+              closeDrawer={this.closeDrawer}
             />
           </div>
         </Modal>
