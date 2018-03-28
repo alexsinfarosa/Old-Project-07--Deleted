@@ -6,7 +6,7 @@ import axios from "axios";
 import { idAdjustment, vXDef } from "../utils/utils";
 
 // date-fns
-import { format, startOfYear, isSameYear, isAfter, addDays } from "date-fns";
+import { format, startOfYear, isAfter, addDays } from "date-fns";
 
 // fetch
 import fetchData from "../utils/fetchData";
@@ -132,23 +132,12 @@ export default class ParamsStore {
     };
   }
 
-  get edate() {
-    if (isSameYear(new Date(), new Date(this.dateOfInterest))) {
-      // if current year fetch data up to today
-      return format(new Date(), "YYYY-MM-DD");
-    } else {
-      // if NOT current year fetch data up to date of interest + 5 days
-      // +5 days to make the table the same as when current year
-      return format(addDays(this.dateOfInterest, 5), "YYYY-MM-DD");
-    }
-  }
-
   get params() {
     if (this.station) {
       return {
         sid: `${idAdjustment(this.station)} ${this.station.network}`,
         sdate: format(startOfYear(this.dateOfInterest), "YYYY-MM-DD"),
-        edate: this.edate,
+        edate: format(addDays(this.dateOfInterest, 5), "YYYY-MM-DD"),
         elems: [vXDef[this.station.network]["temp"]],
         meta: "tzo"
       };
@@ -200,7 +189,6 @@ decorate(ParamsStore, {
   filteredStationList: computed,
   dateOfInterest: observable,
   setDateOfInterest: action,
-  edate: computed,
   bioFix: observable,
   setBioFix: action,
   asJson: computed,

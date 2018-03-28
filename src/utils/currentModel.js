@@ -1,22 +1,9 @@
-import { average } from "./utils";
-import { format, isSameYear } from "date-fns";
+import { format } from "date-fns";
 
 export default (cleanedData, asJson) => {
   const arr = [...cleanedData.entries()];
-
-  // slice cleanData up to dateOfInterest
-  const dateOfInterest = format(asJson.dateOfInterest, "YYYY-MM-DD");
-  const dateOfInterestIdx = arr.findIndex(d => d[0] === dateOfInterest);
-
-  let dates, hrTemps;
-  if (isSameYear(new Date(), asJson.dateOfInterest)) {
-    // add 5 days for consistency in the GDDTable
-    dates = arr.slice(0, dateOfInterestIdx + 6).map(d => d[0]);
-    hrTemps = arr.slice(0, dateOfInterestIdx + 6).map(d => d[1]);
-  } else {
-    dates = arr.map(d => d[0]);
-    hrTemps = arr.map(d => d[1]);
-  }
+  const dates = arr.map(d => d[0]);
+  const hrTemps = arr.map(d => d[1]);
 
   // handle accumulation from March 1st
   const datesArr = dates.map(d => d.split("-"));
@@ -39,10 +26,16 @@ export default (cleanedData, asJson) => {
   let cddBioFix = 0;
   let missingDays = [];
   hrTemps.forEach((arr, i) => {
-    const avg = average(arr);
+    const countMissinValues = arr.filter(v => v === "M");
+
+    let min, max, avg;
     let p = {};
 
-    if (!isNaN(avg)) {
+    if (countMissinValues.length < 5) {
+      const filtered = arr.filter(v => v !== "M");
+      min = Math.min(...filtered);
+      max = Math.max(...filtered);
+      avg = (min + max) / 2;
       // calculate dd (degree day)
       const dd = avg - base > 0 ? avg - base : 0;
 
@@ -60,13 +53,13 @@ export default (cleanedData, asJson) => {
       }
 
       p.date = dates[i];
-      p.dd = dd;
-      p.cdd = cdd;
-      p.min = Math.min(...arr);
-      p.avg = avg;
-      p.max = Math.max(...arr);
-      p.cddFromMarch1 = cddFromMarch1;
-      p.cddBioFix = asJson.bioFix ? cddBioFix : "-";
+      p.dd = dd.toFixed(0);
+      p.cdd = cdd.toFixed(0);
+      p.min = min.toFixed(0);
+      p.avg = avg.toFixed(0);
+      p.max = max.toFixed(0);
+      p.cddFromMarch1 = cddFromMarch1.toFixed(0);
+      p.cddBioFix = asJson.bioFix ? cddBioFix.toFixed(0) : "-";
     } else {
       missingDays.push(dates[i]);
       p.date = dates[i];
