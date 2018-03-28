@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { inject, observer } from "mobx-react";
-import iconStation from "../assets/stationR.png";
+import stationSel from "../assets/stationSel.png";
+import planeSel from "../assets/planeSel.png";
 
 // map
 import { Map, TileLayer, Marker, Tooltip, GeoJSON } from "react-leaflet";
@@ -72,9 +73,9 @@ class USMap extends Component {
         key={`${stn.id} ${stn.network}`}
         position={[stn.lat, stn.lon]}
         icon={
-          stn.id === station.id
+          station && stn.id === station.id
             ? L.icon({
-                iconUrl: iconStation,
+                iconUrl: stn.network === "icao" ? planeSel : stationSel,
                 iconSize: [14, 14]
               })
             : L.icon({
@@ -87,7 +88,7 @@ class USMap extends Component {
       >
         <Tooltip>
           <span>
-            {station.name}, {station.state}
+            {stn.name}, {stn.state}
           </span>
         </Tooltip>
       </Marker>
@@ -107,7 +108,7 @@ class USMap extends Component {
             <GeoJSON
               data={this.state.geojson}
               style={{
-                color: pink[200],
+                color: pink[100],
                 weight: 1
                 // opacity: 0.65
               }}
