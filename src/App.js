@@ -19,6 +19,7 @@ import LeftPanel from "./components/LeftPanel";
 import Header from "./components/Header";
 import GDDTable from "./components/GDDTable";
 import USMap from "./components/USMap";
+import Footer from "./components/Footer";
 
 const drawerWidth = 250;
 const styles = theme => ({
@@ -29,7 +30,8 @@ const styles = theme => ({
     position: "relative",
     display: "flex",
     width: "100%",
-    height: "100vh"
+    height: "100vh",
+    backgroundColor: "#E7ECF0"
   },
   appBar: {
     position: "absolute",
@@ -50,13 +52,16 @@ const styles = theme => ({
     }
   },
   content: {
-    flexGrow: 1,
-    flexShrink: 1,
+    flex: 1,
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
     backgroundColor: "#E7ECF0",
     paddingLeft: theme.spacing.unit * 1.5,
     paddingRight: theme.spacing.unit * 1.5,
     paddingTop: theme.spacing.unit * 8,
-    margin: "0 auto"
+    margin: "0 auto",
+    overflowY: "auto"
   },
   link: {
     color: "#fff",
@@ -74,7 +79,6 @@ const styles = theme => ({
 
 class App extends Component {
   state = {
-    isLoading: false,
     mobileOpen: false,
     isModalOpen: false
   };
@@ -164,16 +168,18 @@ class App extends Component {
             station && (
               <Fragment>
                 <Header />
-                <GDDTable />
+                <div style={{ flex: 1 }}>
+                  <GDDTable />
+                </div>
+                <Footer />
               </Fragment>
             )}
         </main>
 
         {/* US map */}
-
         <Modal
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
+          aria-labelledby="US map"
+          aria-describedby="US map"
           disableAutoFocus={true}
           open={this.state.isModalOpen}
           onClose={this.toggleModal}

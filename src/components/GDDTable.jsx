@@ -24,7 +24,6 @@ const styles = theme => ({
     maxWidth: 1200,
     margin: "0 auto",
     marginTop: theme.spacing.unit * 2,
-    overflowX: "auto",
     borderRadius: 8
   },
   table: {
@@ -262,7 +261,7 @@ class GDDTable extends Component {
             <Typography variant="caption" className={classes.missingDays}>
               {`(+${missingDays.length}) ${
                 missingDays.length === 1 ? "day" : "days"
-              } missing: 
+              } missing:
                   `}
               {missingDays.map((d, i) => {
                 if (i === missingDays.length - 1) {

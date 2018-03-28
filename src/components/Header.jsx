@@ -8,15 +8,17 @@ import withRoot from "../withRoot";
 const styles = theme => ({
   root: {
     width: "100%",
+    flex: "none",
+    display: "flex",
     maxWidth: 1200,
     margin: "0 auto",
-    marginTop: theme.spacing.unit * 1,
-    "@media (min-width: 576px)": {
-      marginTop: theme.spacing.unit * 4
-    }
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: theme.spacing.unit * 4,
+    marginBottom: theme.spacing.unit * 1
   },
   header: {
-    fontSize: "1rem",
+    fontSize: "1.2rem",
     color: "black",
     "@media (min-width: 576px)": {
       fontSize: "1.5rem"
