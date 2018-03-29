@@ -36,6 +36,7 @@ export default (cleanedData, asJson) => {
       min = Math.min(...filtered);
       max = Math.max(...filtered);
       avg = (min + max) / 2;
+
       // calculate dd (degree day)
       const dd = avg - base > 0 ? avg - base : 0;
 
@@ -43,14 +44,10 @@ export default (cleanedData, asJson) => {
       cdd += dd;
 
       // start accumulation from March 1st
-      if (i >= march1Idx) {
-        cddFromMarch1 += dd;
-      }
+      if (i >= march1Idx) cddFromMarch1 += dd;
 
       // start accumulation from BioFix date
-      if (i >= bioFixIdx) {
-        cddBioFix += dd;
-      }
+      if (i >= bioFixIdx) cddBioFix += dd;
 
       p.date = dates[i];
       p.dd = dd.toFixed(0);

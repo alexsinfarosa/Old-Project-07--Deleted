@@ -68,10 +68,10 @@ const styles = theme => ({
     textDecoration: "none"
   },
   header: {
-    fontSize: "1rem",
+    fontSize: "90%",
     color: "white",
     "@media (min-width: 576px)": {
-      fontSize: "1.4rem",
+      fontSize: "100%",
       letterSpacing: 1
     }
   }

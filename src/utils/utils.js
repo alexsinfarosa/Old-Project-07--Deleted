@@ -3,6 +3,8 @@ import planeGrey from "../assets/planeGrey.png";
 import iconStation from "../assets/station.png";
 import stationGrey from "../assets/stationGrey.png";
 
+import moment from "moment-timezone";
+
 // MAP ---------------------------------------------------------
 export const matchIconsToStations = (station, state) => {
   const protocol = window.location.protocol;
@@ -198,20 +200,23 @@ export const average = data => {
 };
 
 // convert time in local standard time to local time (based on time zone and dst)
-// function formatTime(day, hour, tzo) {
-//   var time_zone_name = {
-//     5: "America/New_York",
-//     6: "America/Chicago",
-//     7: "America/Denver",
-//     8: "America/Los_Angeles"
-//   };
-//   return moment
-//     .utc(day)
-//     .hour(hour)
-//     .add(Math.abs(tzo), "hours")
-//     .tz(time_zone_name[Math.abs(tzo)])
-//     .format("MM/DD/YYYY HH:00 z");
-// }
+function formatTime(day, hour, tzo) {
+  tzo = Math.abs(tzo);
+  var timeZoneNames = {
+    5: "America/New_York",
+    6: "America/Chicago",
+    7: "America/Denver",
+    8: "America/Los_Angeles"
+  };
+  return moment
+    .utc(day)
+    .hour(hour)
+    .add(tzo, "hours")
+    .tz(timeZoneNames[tzo])
+    .format("MM/DD/YYYY HH:00 z");
+}
+
+console.log(formatTime(new Date("2018-03-01"), 14, -5));
 
 // convert from ACIS results object to new object keyed on date/time (i.e. one record per hour)
 // function serializeObject(results, input_params) {
