@@ -215,34 +215,3 @@ export const formatTime = (day, hour, tzo) => {
     .tz(timeZoneNames[tzo])
     .format("YYYY-MM-DD H");
 };
-
-console.log(formatTime(new Date("2018-03-21"), 14, -5));
-
-// convert from ACIS results object to new object keyed on date/time (i.e. one record per hour)
-// function serializeObject(results, input_params) {
-//   var hlydate,
-//     dt_key,
-//     hrly_data = {},
-//     data = results.data,
-//     tzo = -results.meta.tzo,
-//     elems =
-//       typeof input_params === "string"
-//         ? [input_params]
-//         : input_params.elems.map(function(elem) {
-//             return elem.vX;
-//           });
-//   if (data && data.length > 0) {
-//     data.forEach(function(dlyrec) {
-//       hlydate = dlyrec[0];
-//       for (var h = 1; h <= 24; h += 1) {
-//         dt_key = [hlydate, h].join("-");
-//         hrly_data[dt_key] = {};
-//         hrly_data[dt_key].date = formatTime(hlydate, h, tzo);
-//         dlyrec.slice(1).forEach(function(elval, ie) {
-//           hrly_data[dt_key][elems[ie]] = elval[h - 1];
-//         });
-//       }
-//     });
-//   }
-//   return hrly_data;
-// }

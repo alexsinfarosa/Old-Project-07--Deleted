@@ -47,10 +47,10 @@ export default (acisData, asJson) => {
   // transforming data to account for Day Light Tiem Saving
   let resultsDLT = new Map();
   const tzo = acisData.get("tzo");
-  const len = replacedUnflattened.length;
+  const len = replacedUnflattened.length - 1;
   replacedUnflattened.forEach((arr, i) => {
     let day = arr.map((t, j) => formatTime(dates[i], j, tzo));
-    if (i === len - 1) day = day.slice(0, 23);
+    if (i === len) day = day.slice(0, 23);
 
     let dayDLT = day.map((date, j) => {
       const [d, hr] = date.split(" ");
