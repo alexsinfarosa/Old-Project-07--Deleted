@@ -200,7 +200,7 @@ export const average = data => {
 };
 
 // convert time in local standard time to local time (based on time zone and dst)
-function formatTime(day, hour, tzo) {
+export const formatTime = (day, hour, tzo) => {
   tzo = Math.abs(tzo);
   var timeZoneNames = {
     5: "America/New_York",
@@ -213,10 +213,10 @@ function formatTime(day, hour, tzo) {
     .hour(hour)
     .add(tzo, "hours")
     .tz(timeZoneNames[tzo])
-    .format("MM/DD/YYYY HH:00 z");
-}
+    .format("YYYY-MM-DD H");
+};
 
-console.log(formatTime(new Date("2018-03-01"), 14, -5));
+console.log(formatTime(new Date("2018-03-21"), 14, -5));
 
 // convert from ACIS results object to new object keyed on date/time (i.e. one record per hour)
 // function serializeObject(results, input_params) {

@@ -3,7 +3,8 @@ import {
   fahrenheitToCelcius,
   averageMissingValues,
   flatten,
-  unflatten
+  unflatten,
+  formatTime
 } from "../utils/utils";
 
 export default (acisData, asJson) => {
@@ -41,9 +42,23 @@ export default (acisData, asJson) => {
 
   const replacedUnflattened = unflatten(replaced);
   let results = new Map();
-
   replacedUnflattened.forEach((day, i) => results.set(dates[i], day));
 
-  console.log(results);
-  return results;
+  // transforming data to account for Day Light Tiem Saving
+  let resultsDLT = new Map();
+  const tzo = acisData.get("tzo");
+  const len = replacedUnflattened.length;
+  replacedUnflattened.forEach((arr, i) => {
+    let day = arr.map((t, j) => formatTime(dates[i], j, tzo));
+    if (i === len - 1) day = day.slice(0, 23);
+
+    let dayDLT = day.map((date, j) => {
+      const [d, hr] = date.split(" ");
+      return results.get(d)[hr];
+    });
+    resultsDLT.set(dates[i], dayDLT);
+  });
+  // console.log(results);
+  // console.log(resultsDLT);
+  return resultsDLT;
 };
