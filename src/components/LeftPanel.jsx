@@ -170,6 +170,7 @@ class LeftPanel extends Component {
               }}
               format="MMMM Do, YYYY"
               disableFuture
+              showTodayButton
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -186,15 +187,14 @@ class LeftPanel extends Component {
             <DatePicker
               style={{ width: "100%" }}
               label="BioFix Date"
-              // helperText="Possible manual entry via keyboard"
-              maxDateMessage="Date must be less than date of interest"
               value={bioFix}
               onChange={e => {
                 setBioFix(e);
                 this.props.closeDrawer();
               }}
               format="MMMM Do, YYYY"
-              disableFuture={true}
+              disableFuture
+              clearable
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">

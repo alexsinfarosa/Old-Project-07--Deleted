@@ -6,7 +6,15 @@ import axios from "axios";
 import { idAdjustment, vXDef } from "../utils/utils";
 
 // date-fns
-import { format, startOfYear, isAfter, addDays } from "date-fns";
+import {
+  format,
+  startOfYear,
+  addDays,
+  isWithinInterval,
+  getYear,
+  isAfter,
+  isSameDay
+} from "date-fns";
 
 // fetch
 import fetchData from "../utils/fetchData";
@@ -32,7 +40,10 @@ export default class ParamsStore {
 
     reaction(
       () => this.asJson,
-      () => (this.stationID === "" ? null : this.setData(this.params))
+      () =>
+        this.stationID === "" || !this.dateOfInterest
+          ? null
+          : this.setData(this.params)
     );
   }
 
@@ -90,14 +101,27 @@ export default class ParamsStore {
 
   //   date of interest
   dateOfInterest = new Date();
-  setDateOfInterest = d => (this.dateOfInterest = d);
+  setDateOfInterest = d => {
+    this.dateOfInterest = d;
+    const yearDateOfInterest = getYear(d);
+    const yearBioFix = getYear(this.bioFix);
+    return yearBioFix === yearDateOfInterest ? null : (this.bioFix = null);
+  };
 
   //   bioFix
   bioFix = null;
   setBioFix = d => {
-    isAfter(new Date(d), this.dateOfInterest)
-      ? (this.bioFix = this.dateOfInterest)
-      : (this.bioFix = d);
+    if (d !== null) {
+      const year = getYear(this.dateOfInterest);
+      const start = new Date(`${year}-01-01 00:00`);
+      const end = new Date();
+
+      isWithinInterval(new Date(d), { start, end })
+        ? (this.bioFix = new Date(d))
+        : (this.bioFix = null);
+    } else {
+      this.bioFix = null;
+    }
   };
 
   //   localstorage
@@ -132,12 +156,29 @@ export default class ParamsStore {
     };
   }
 
+  // get asJson2() {
+  //   return {
+  //     [this.stationID]: {
+  //       [getYear(this.dateOfInterest)]: {
+  //         stationID: this.stationID,
+  //         postalCode: this.postalCode,
+  //         dateOfInterest: this.dateOfInterest,
+  //         bioFix: { year: this.bioFix }
+  //       }
+  //     }
+  //   };
+  // }
+
   get params() {
     if (this.station) {
+      let edate = this.dateOfInterest;
+      if (isAfter(new Date(this.bioFix), new Date(this.dateOfInterest))) {
+        edate = this.bioFix;
+      }
       return {
         sid: `${idAdjustment(this.station)} ${this.station.network}`,
         sdate: format(startOfYear(this.dateOfInterest), "YYYY-MM-DD"),
-        edate: format(addDays(this.dateOfInterest, 5), "YYYY-MM-DD"),
+        edate: format(addDays(edate, 5), "YYYY-MM-DD"),
         elems: [vXDef[this.station.network]["temp"]],
         meta: "tzo"
       };
@@ -172,7 +213,10 @@ export default class ParamsStore {
   };
 
   get dataForTable() {
-    return this.data.slice(-8);
+    const todayIdx = this.data.findIndex(obj =>
+      isSameDay(new Date(obj.date), new Date(this.dateOfInterest))
+    );
+    return this.data.slice(todayIdx - 3, todayIdx + 6);
   }
 }
 
