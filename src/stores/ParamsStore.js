@@ -138,6 +138,7 @@ export default class ParamsStore {
     );
     if (localStorageRef) {
       const params = JSON.parse(localStorageRef);
+
       if (Object.keys(params).length !== 0) {
         this.postalCode = params.postalCode;
         this.stationID = params.stationID;
@@ -155,19 +156,6 @@ export default class ParamsStore {
       bioFix: this.bioFix
     };
   }
-
-  // get asJson2() {
-  //   return {
-  //     [this.stationID]: {
-  //       [getYear(this.dateOfInterest)]: {
-  //         stationID: this.stationID,
-  //         postalCode: this.postalCode,
-  //         dateOfInterest: this.dateOfInterest,
-  //         bioFix: { year: this.bioFix }
-  //       }
-  //     }
-  //   };
-  // }
 
   get params() {
     if (this.station) {
