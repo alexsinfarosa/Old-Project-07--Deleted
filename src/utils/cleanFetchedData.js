@@ -58,7 +58,7 @@ export default (acisData, asJson) => {
     });
     resultsDLT.set(dates[i], dayDLT);
   });
-  // console.log(results);
+
   // console.log(resultsDLT);
   return resultsDLT;
 };
