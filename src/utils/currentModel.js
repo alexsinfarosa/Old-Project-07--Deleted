@@ -50,13 +50,13 @@ export default (cleanedData, asJson) => {
       if (i >= bioFixIdx) cddBioFix += dd;
 
       p.date = dates[i];
-      p.dd = dd.toFixed(1);
-      p.cdd = cdd.toFixed(1);
-      p.min = min.toFixed(1);
-      p.avg = avg.toFixed(1);
-      p.max = max.toFixed(1);
-      p.cddFromMarch1 = cddFromMarch1.toFixed(1);
-      p.cddBioFix = asJson.bioFix ? cddBioFix.toFixed(1) : "-";
+      p.dd = dd.toFixed(0);
+      p.cdd = cdd.toFixed(0);
+      p.min = min.toFixed(0);
+      p.avg = avg.toFixed(0);
+      p.max = max.toFixed(0);
+      p.cddFromMarch1 = cddFromMarch1.toFixed(0);
+      p.cddBioFix = asJson.bioFix ? cddBioFix.toFixed(0) : "-";
     } else {
       missingDays.push(dates[i]);
       p.date = dates[i];

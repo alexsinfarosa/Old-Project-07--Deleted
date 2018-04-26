@@ -35,9 +35,7 @@ export default (acisData, asJson) => {
     const forecastValues = flatten(forecast.map(arr => arr[1]));
 
     // replace missing values with forecast data
-    replaced = replaced.map(
-      (t, i) => (t === "M" ? fahrenheitToCelcius(forecastValues[i]) : t)
-    );
+    replaced = replaced.map((t, i) => (t === "M" ? forecastValues[i] : t));
   }
 
   const replacedUnflattened = unflatten(replaced);
@@ -59,6 +57,6 @@ export default (acisData, asJson) => {
     resultsDLT.set(dates[i], dayDLT);
   });
 
-  // console.log(resultsDLT);
+  console.log(resultsDLT);
   return resultsDLT;
 };
