@@ -1,6 +1,5 @@
 import { isSameYear } from "date-fns";
 import {
-  fahrenheitToCelcius,
   averageMissingValues,
   flatten,
   unflatten,
@@ -57,6 +56,6 @@ export default (acisData, asJson) => {
     resultsDLT.set(dates[i], dayDLT);
   });
 
-  console.log(resultsDLT);
+  // console.log(resultsDLT);
   return resultsDLT;
 };

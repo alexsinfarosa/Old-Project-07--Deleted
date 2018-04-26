@@ -102,7 +102,8 @@ class USMap extends Component {
           ref={m => (this.leafletMap = m)}
           scrollWheelZoom={false}
         >
-          <TileLayer url="http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png" />
+          {/*<TileLayer url="http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png" />*/}
+          <TileLayer url="http://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}" />
           {MarkerList}
           {this.state.geojson.coordinates && (
             <GeoJSON
