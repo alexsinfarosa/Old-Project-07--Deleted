@@ -54,7 +54,11 @@ const styles = theme => ({
   },
   iconMap: {
     margin: "0 auto",
-    marginTop: theme.spacing.unit * 2
+    marginTop: theme.spacing.unit * 2,
+    borderRadius: 10
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit
   }
 });
 
@@ -105,14 +109,13 @@ class LeftPanel extends Component {
         </div>
 
         <Button
-          variant="fab"
-          mini
+          variant="raised"
           onClick={this.props.toggleModal}
           aria-label="map"
           color="primary"
           className={classes.iconMap}
         >
-          <PlaceIcon />
+          MAP <PlaceIcon className={classes.rightIcon} />
         </Button>
 
         <form

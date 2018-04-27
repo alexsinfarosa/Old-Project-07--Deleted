@@ -26,30 +26,30 @@ const styles = theme => ({
 });
 
 class USMap extends Component {
-  state = {
-    geojson: {}
-  };
+  // state = {
+  //   geojson: {}
+  // };
 
-  componentDidMount() {
-    const leafletMap = this.leafletMap.leafletElement;
-    leafletMap.on("zoomend", () => {
-      console.log("Current zoom level -> ", leafletMap.getZoom());
-    });
+  // componentDidMount() {
+  //   const leafletMap = this.leafletMap.leafletElement;
+  //   leafletMap.on("zoomend", () => {
+  //     console.log("Current zoom level -> ", leafletMap.getZoom());
+  //   });
 
-    const { postalCode } = this.props.rootStore.paramsStore;
-    if (postalCode !== "ALL") {
-      const url = `${
-        window.location.protocol
-      }//data.rcc-acis.org/General/state?state=${postalCode}&meta=name,geojson`;
+  //   const { postalCode } = this.props.rootStore.paramsStore;
+  //   if (postalCode !== "ALL") {
+  //     const url = `${
+  //       window.location.protocol
+  //     }//data.rcc-acis.org/General/state?state=${postalCode}&meta=name,geojson`;
 
-      fetch(url)
-        .then(res => res.json())
-        .then(res => {
-          const geojson = res.meta[0].geojson;
-          this.setState({ geojson });
-        });
-    }
-  }
+  //     fetch(url)
+  //       .then(res => res.json())
+  //       .then(res => {
+  //         const geojson = res.meta[0].geojson;
+  //         this.setState({ geojson });
+  //       });
+  //   }
+  // }
 
   handleStateStationFromMap = station => {
     const { setStateStationFromMap } = this.props.rootStore.paramsStore;
@@ -75,7 +75,7 @@ class USMap extends Component {
         icon={
           station && stn.id === station.id
             ? L.icon({
-                iconUrl: stn.network === "icao" ? planeSel : stationSel,
+                iconUrl: stn.network === "icao" ? planeSel : stn.icon,
                 iconSize: [14, 14]
               })
             : L.icon({
@@ -105,7 +105,7 @@ class USMap extends Component {
           {/*<TileLayer url="http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png" />*/}
           <TileLayer url="http://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}" />
           {MarkerList}
-          {this.state.geojson.coordinates && (
+          {/*{this.state.geojson.coordinates && (
             <GeoJSON
               data={this.state.geojson}
               style={{
@@ -114,7 +114,7 @@ class USMap extends Component {
                 // opacity: 0.65
               }}
             />
-          )}
+          )}*/}
         </Map>
       </Paper>
     );
