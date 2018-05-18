@@ -33,7 +33,7 @@ class Header extends Component {
 
     return (
       <div className={classes.root}>
-        <Typography variant="display1" className={classes.header}>
+        <Typography variant="display1" gutterBottom>
           Results for {station.name}, {station.state}
         </Typography>
       </div>

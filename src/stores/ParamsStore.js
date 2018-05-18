@@ -167,7 +167,7 @@ export default class ParamsStore {
         sid: `${idAdjustment(this.station)} ${this.station.network}`,
         sdate: format(startOfYear(this.dateOfInterest), "YYYY-MM-DD"),
         edate: format(addDays(edate, 5), "YYYY-MM-DD"),
-        elems: [vXDef[this.station.network]["temp"]],
+        elems: [{ vX: vXDef[this.station.network]["temp"], prec: 1 }],
         meta: "tzo"
       };
     }

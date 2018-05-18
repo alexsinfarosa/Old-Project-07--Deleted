@@ -20,6 +20,7 @@ import Header from "./components/Header";
 import GDDTable from "./components/GDDTable";
 import USMap from "./components/USMap";
 import Footer from "./components/Footer";
+import Disclaimer from "./components/Disclaimer";
 
 const drawerWidth = 250;
 const styles = theme => ({
@@ -97,7 +98,7 @@ class App extends Component {
 
   render() {
     const { classes } = this.props;
-    const { data, station } = this.props.rootStore.paramsStore;
+    const { data, station, isLoading } = this.props.rootStore.paramsStore;
 
     return (
       <div className={classes.root}>
@@ -164,16 +165,29 @@ class App extends Component {
 
         {/* main content */}
         <main className={classes.content}>
-          {data.length !== 0 &&
-            station && (
-              <Fragment>
-                <Header />
-                <div style={{ flex: 1 }}>
-                  <GDDTable />
-                </div>
-                <Footer />
-              </Fragment>
-            )}
+          {data.length !== 0 && station ? (
+            <Fragment>
+              <Header />
+              <div style={{ flex: 1 }}>
+                <GDDTable />
+                {!isLoading && <Disclaimer />}
+              </div>
+              <Footer />
+            </Fragment>
+          ) : (
+            <div
+              style={{
+                display: "flex",
+                height: "100%",
+                justifyContent: "center",
+                alignItems: "center"
+              }}
+            >
+              <Typography variant="display1">
+                Make a selection from the left side panel
+              </Typography>
+            </div>
+          )}
         </main>
 
         {/* US map */}

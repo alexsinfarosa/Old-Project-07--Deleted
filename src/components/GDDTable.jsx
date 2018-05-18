@@ -28,7 +28,8 @@ const styles = theme => ({
   },
   table: {
     // minWidth: 700,
-    borderRadius: 4
+    borderRadius: 4,
+    marginBottom: theme.spacing.unit * 8
   },
   isMobile: {
     [theme.breakpoints.down("md")]: {
