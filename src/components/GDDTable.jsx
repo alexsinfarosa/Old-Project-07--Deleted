@@ -191,7 +191,7 @@ class GDDTable extends Component {
                         style={{
                           // padding: "0px 10px",
                           // textAlign: "center",
-                          fontSize: isToday ? "1rem" : null,
+                          fontSize: isToday ? "1.1rem" : null,
                           fontWeight: isToday ? 700 : null
                         }}
                       >
@@ -212,7 +212,7 @@ class GDDTable extends Component {
                       </TableCell>
                       <TableCell
                         style={{
-                          fontSize: isToday ? "1rem" : null,
+                          fontSize: isToday ? "1.1rem" : null,
                           fontWeight: isToday ? 700 : null
                         }}
                         className={classes.tableCell}
@@ -222,7 +222,7 @@ class GDDTable extends Component {
                       </TableCell>
                       <TableCell
                         style={{
-                          fontSize: isToday ? "1rem" : null,
+                          fontSize: isToday ? "1.1rem" : null,
                           fontWeight: isToday ? 700 : null
                         }}
                         className={classes.tableCell}
@@ -232,7 +232,7 @@ class GDDTable extends Component {
                       </TableCell>
                       <TableCell
                         style={{
-                          fontSize: isToday ? "1rem" : null,
+                          fontSize: isToday ? "1.1rem" : null,
                           fontWeight: isToday ? 700 : null
                         }}
                         className={classes.tableCell}
@@ -244,7 +244,7 @@ class GDDTable extends Component {
                         className={classes.isMobile}
                         style={{
                           borderLeft: "1px solid #E0E0E0",
-                          fontSize: isToday ? "1rem" : null,
+                          fontSize: isToday ? "1.1rem" : null,
                           fontWeight: isToday ? 700 : null
                         }}
                         numeric
@@ -253,7 +253,7 @@ class GDDTable extends Component {
                       </TableCell>
                       <TableCell
                         style={{
-                          fontSize: isToday ? "1rem" : null,
+                          fontSize: isToday ? "1.1rem" : null,
                           fontWeight: isToday ? 700 : null
                         }}
                         className={classes.isMobile}
@@ -263,7 +263,7 @@ class GDDTable extends Component {
                       </TableCell>
                       <TableCell
                         style={{
-                          fontSize: isToday ? "1rem" : null,
+                          fontSize: isToday ? "1.1rem" : null,
                           fontWeight: isToday ? 700 : null
                         }}
                         className={classes.isMobile}
