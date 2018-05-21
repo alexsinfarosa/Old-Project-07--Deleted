@@ -15,7 +15,7 @@ import { CircularProgress } from "material-ui/Progress";
 import Typography from "material-ui/Typography";
 
 // date
-import { format, isSameDay, getYear } from "date-fns";
+import { format, isSameDay, getYear, differenceInDays } from "date-fns";
 
 // styles
 const styles = theme => ({
@@ -59,6 +59,13 @@ const styles = theme => ({
 });
 
 class GDDTable extends Component {
+  timeColor = date => {
+    const formattedDate = format(date, "YYYY-MM-DD");
+    const formattedToday = format(new Date(), "YYYY-MM-DD");
+    if (isSameDay(formattedDate, formattedToday)) return;
+    if (differenceInDays(formattedDate, formattedToday) < 0) return "#0FA3B1";
+    if (differenceInDays(formattedDate, formattedToday) >= 0) return "#F9E04C";
+  };
   render() {
     const { classes } = this.props;
     const {
@@ -90,6 +97,7 @@ class GDDTable extends Component {
                   <TableCell
                     className={classes.tableCell}
                     rowSpan={2}
+                    colSpan={2}
                     style={{
                       textAlign: "center",
                       margin: 0,
@@ -161,27 +169,41 @@ class GDDTable extends Component {
                   </TableCell>
                 </TableRow>
               </TableHead>
+
               <TableBody>
                 {dataForTable.map(o => {
                   const isToday = isSameDay(new Date(dateOfInterest), o.date);
+                  const formattedDate = format(o.date, "YYYY-MM-DD");
+                  const formattedToday = format(new Date(), "YYYY-MM-DD");
                   return (
                     <TableRow hover key={o.date}>
                       <TableCell
                         className={classes.tableCell}
                         style={{
-                          padding: "0px 10px",
-                          textAlign: "center",
+                          margin: 0,
+                          padding: 0,
+                          width: 8,
+                          background: this.timeColor(o.date)
+                        }}
+                      />
+                      <TableCell
+                        className={classes.tableCell}
+                        style={{
+                          // padding: "0px 10px",
+                          // textAlign: "center",
                           fontSize: isToday ? "1rem" : null,
                           fontWeight: isToday ? 700 : null
                         }}
                       >
-                        {format(o.date, "MMMM Do")}
+                        {isSameDay(formattedDate, formattedToday)
+                          ? "Today"
+                          : format(o.date, "MMMM Do")}
                       </TableCell>
                       <TableCell
                         className={classes.tableCell}
                         style={{
                           borderLeft: "1px solid #E0E0E0",
-                          fontSize: isToday ? "1rem" : null,
+                          fontSize: isToday ? "1.1rem" : null,
                           fontWeight: isToday ? 700 : null
                         }}
                         numeric

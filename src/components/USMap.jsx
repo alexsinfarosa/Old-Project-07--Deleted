@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { inject, observer } from "mobx-react";
-import stationSel from "../assets/stationSel.png";
 import planeSel from "../assets/planeSel.png";
 
 // map
-import { Map, TileLayer, Marker, Tooltip, GeoJSON } from "react-leaflet";
+import { Map, TileLayer, Marker, Tooltip } from "react-leaflet";
 import L from "leaflet";
 
 // utils
@@ -14,7 +13,6 @@ import { matchIconsToStations } from "../utils/utils";
 import { withStyles } from "material-ui/styles";
 import withRoot from "../withRoot";
 import Paper from "material-ui/Paper";
-import pink from "material-ui/colors/pink";
 
 // styles
 const styles = theme => ({

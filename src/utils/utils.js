@@ -1,8 +1,3 @@
-import plane from "../assets/plane.png";
-import planeGrey from "../assets/planeGrey.png";
-import iconStation from "../assets/station.png";
-import stationGrey from "../assets/stationGrey.png";
-
 import moment from "moment-timezone";
 
 // MAP ---------------------------------------------------------
