@@ -1,1 +1,1 @@
-# NEWA Cranberry FruitWorm Model
+### Old Project - Deleted!
